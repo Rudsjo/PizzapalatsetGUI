@@ -25,6 +25,30 @@ namespace AdminTerminal_v2
 
         public ObservableCollection<EmployeeViewModel> EmployeeList { get; set; }
 
+
+        #region Sizes
+        /// <summary>
+        /// The regular/maximum window height
+        /// </summary>
+        public static int MaxWindowHeight { get; set; } = 600;
+
+        /// <summary>
+        /// The regular/maximum window width
+        /// </summary>
+        public static int MaxWindowWidth { get; set; } = (MaxWindowHeight * 2);
+
+        /// <summary>
+        /// The minimum window height
+        /// </summary>
+        public static int MinWindowHeight { get; set; } = 450;
+
+        /// <summary>
+        /// The minimum window width
+        /// </summary>
+        public static int MinWindowWidth { get; set; } = (MinWindowHeight * 2);
+
+        #endregion
+
         #endregion
 
         #region Constructor
@@ -43,6 +67,10 @@ namespace AdminTerminal_v2
 
         public void NavigatorCommand(object e)
         {
+            CurrentList = null;
+            DatabaseList = null;
+            CurrentPage = Navigator.Extras;
+
             if (Enum.TryParse<Navigator>((string)e, out Navigator nav))
             {
                 CurrentPage = nav;

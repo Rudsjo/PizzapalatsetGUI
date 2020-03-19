@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:AdminTerminal_v2"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="AdminTerminal" Height="450" Width="800">
+        Title="AdminTerminal" 
+        MaxHeight="{Binding MaxWindowHeight}" MaxWidth="{Binding MaxWindowWidth}"
+        MinHeight="{Binding MinWindowHeight}" MinWidth="{Binding MinWindowWidth}">
     <Grid>
         <!-- Standard Background image -->
         <Grid.Background>

@@ -21,6 +21,8 @@ namespace AdminTerminal_v2
             Add = new RelayParameterlessCommand(AddCommand);
             Update = new RelayParameterlessCommand(UpdateCommand);
             Delete = new RelayParameterlessCommand(DeleteCommand);
+            Clear = new RelayParameterlessCommand(ClearCommand);
+
 
             Navigate = new RelayParameterlessCommand(MainWindowViewModel.VM.NavigatorCommand);
         }

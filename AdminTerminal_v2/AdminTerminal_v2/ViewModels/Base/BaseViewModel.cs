@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using BackendHandler;
 
@@ -27,7 +28,7 @@ namespace AdminTerminal_v2
         /// <summary>
         /// The property used to save the items from database
         /// </summary>
-        private IEnumerable DatabaseList { get; set; }
+        public IEnumerable DatabaseList { get; set; }
 
         /// <summary>
         /// The current employee selected
@@ -180,6 +181,10 @@ namespace AdminTerminal_v2
             }
         }
 
+        public static IngredientWindow IngredientPopupWindow { get; set; }
+
+        public static BackendHandler.Pizza PizzaToAdd { get; set; }
+
         #endregion
 
         #region Command Properties
@@ -228,6 +233,7 @@ namespace AdminTerminal_v2
         /// <returns></returns>
         public async Task UpdateList()
         {
+
             // check the current page
             switch (MainWindowViewModel.VM.CurrentPage)
             {
@@ -342,15 +348,21 @@ namespace AdminTerminal_v2
 
                 case Navigator.Pizzas:
                     {
-                        // Creating a new instance of the item and fills up the properties
-                        var PizzaToAdd = new BackendHandler.Pizza() { Type = CurrentType, Price = float.Parse(CurrentPrice) };
+                        var PizzaToUpdate = new PizzaViewModel() { Type = CurrentType, Price = float.Parse(CurrentPrice), PizzabaseID = 1 };
 
-                        // Calling the database and adds the item
-                        rep.AddPizza(PizzaToAdd);
+                        IngredientPopupWindow = new IngredientWindow(PizzaToUpdate);
+                        Nullable<bool> result = IngredientPopupWindow.ShowDialog(); 
 
-                        // Updates the list and the UI
-                        UpdateList();
-                        return;
+                        if(result == false)
+                        {
+                            return;
+                        }
+
+                        else
+                        {
+                            UpdateList();
+                            return;
+                        }
                     }
             }
         }
@@ -416,6 +428,23 @@ namespace AdminTerminal_v2
                         UpdateList();
                         return;
                     }
+
+                case Navigator.Pizzas:
+                    {
+                        // Creating a new instance of the item and fills up the properties
+                        if (CurrentID == null)
+                            return;
+
+                        var PizzaToUpdate = new PizzaViewModel() { PizzaID = int.Parse(CurrentID), Type = CurrentType, Price = float.Parse(CurrentPrice), PizzabaseID = 1 };
+
+                        // Opening in up a new window so the user can add ingredients
+                        IngredientPopupWindow = new IngredientWindow(PizzaToUpdate);
+                        //IngredientPopupWindow.ShowDialog();
+
+                        // Updates the list and the UI
+                        UpdateList();
+                        return;
+                    }
             }
         }
 
@@ -453,6 +482,16 @@ namespace AdminTerminal_v2
                         UpdateList();
                         return;
                     }
+
+                case Navigator.Pizzas:
+                    {
+                        var PizzaToDelete = GetSelectedItemAsModelType<BackendHandler.Pizza, PizzaViewModel>(Pizza);
+
+                        rep.DeletePizza(PizzaToDelete);
+                        UpdateList();
+                        return;
+                    }
+
             }
         }
 
@@ -510,7 +549,7 @@ namespace AdminTerminal_v2
         /// <typeparam name="ModelViewModelType">The type to get the value from</typeparam>
         /// <param name="Instance">The current instance needed to get the right item</param>
         /// <returns>The sent in item as the desired model type</returns>
-        private ModelType GetSelectedItemAsModelType<ModelType, ModelViewModelType>(ModelViewModelType Instance)
+        public ModelType GetSelectedItemAsModelType<ModelType, ModelViewModelType>(ModelViewModelType Instance)
         {
             // casting the database result to a queryable list
             var ModelTypeList = DatabaseList.Cast<ModelType>().ToList();
@@ -525,7 +564,6 @@ namespace AdminTerminal_v2
             return ModelTypeList[index];
 
         }
-
         #endregion
 
     }
