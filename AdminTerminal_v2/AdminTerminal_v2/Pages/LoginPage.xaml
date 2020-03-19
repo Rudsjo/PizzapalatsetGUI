@@ -1,0 +1,46 @@
+﻿<local:BasePage 
+    x:TypeArguments="local:LoginPageViewModel" 
+    x:Class="AdminTerminal_v2.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AdminTerminal_v2"
+      mc:Ignorable="d" 
+      x:Name="Page"
+      Title="LoginPage">
+
+    <StackPanel VerticalAlignment="Center" Margin="0 -100 0 0">
+        <Image Source="/Images/PP-Logo.png" MaxHeight="200" MaxWidth="200"/>
+
+        <!-- User ID and Password -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Right"
+                        Grid.Column="0">
+                <TextBlock Text="AnvändarID" Margin="5" FontSize="{StaticResource FontSizeSmall}"/>
+                <TextBlock Text="Lösenord" Margin="5" FontSize="{StaticResource FontSizeSmall}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Left"
+                        Grid.Column="1">
+                <TextBox Text="{Binding UserID, Mode=OneWayToSource}" Tag="UserID" Width="150" Margin="5" Padding="3"/>
+                
+                <PasswordBox x:Name="PasswordText" Tag="Password" Width="150" Margin="5" Padding="3" />
+
+                <!-- Login button -->
+                <Button Content="Logga in"
+                        Style="{StaticResource LoginButton}"
+                        local:IsBusyProperty.Value="{Binding LoginIsRunning}"
+                        Command="{Binding LoginCommand}"
+                        CommandParameter="{Binding ElementName=Page}" />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</local:BasePage>
