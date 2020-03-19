@@ -138,9 +138,20 @@
                           FontSize="{StaticResource FontSizeVerySmall}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding CondimentID}"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Type}"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Price}" />
+                            <!-- ID -->
+                            <GridViewColumn DisplayMemberBinding="{Binding CondimentID}">
+                                <TextBlock Text="ID" />
+                            </GridViewColumn>
+                            
+                            <!-- Type/Name -->
+                            <GridViewColumn DisplayMemberBinding="{Binding Type}">
+                                <TextBlock Text="Namn" />
+                            </GridViewColumn>
+                            
+                            <!-- Pris -->
+                            <GridViewColumn DisplayMemberBinding="{Binding Price}">
+                                <TextBlock Text="Pris" />
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>

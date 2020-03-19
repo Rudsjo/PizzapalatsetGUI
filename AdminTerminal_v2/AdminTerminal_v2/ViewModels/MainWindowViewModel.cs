@@ -21,7 +21,7 @@ namespace AdminTerminal_v2
         /// Property to define the current page. 
         /// Standard is Login page.
         /// </summary>
-        public Navigator CurrentPage { get; set; } = Navigator.OldOrders;
+        public Navigator CurrentPage { get; set; } = Navigator.Pizzas;
 
         public ObservableCollection<EmployeeViewModel> EmployeeList { get; set; }
 

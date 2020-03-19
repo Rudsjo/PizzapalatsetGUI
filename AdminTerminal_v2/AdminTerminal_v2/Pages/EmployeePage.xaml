@@ -139,9 +139,15 @@
                           FontSize="{StaticResource FontSizeVerySmall}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding UserID}"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Password}"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding Role}" />
+                            <!-- ID -->
+                            <GridViewColumn DisplayMemberBinding="{Binding UserID}">
+                                <TextBlock Text="ID" />
+                            </GridViewColumn>
+                            
+                             <!-- Roll -->
+                            <GridViewColumn DisplayMemberBinding="{Binding Role}">
+                                <TextBlock Text="Roll" />
+                            </GridViewColumn>
                         </GridView>
                     </ListView.View>
                 </ListView>
