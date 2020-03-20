@@ -439,11 +439,16 @@ namespace AdminTerminal_v2
 
                         // Opening in up a new window so the user can add ingredients
                         IngredientPopupWindow = new IngredientWindow(PizzaToUpdate);
-                        //IngredientPopupWindow.ShowDialog();
+                        Nullable<bool> result = IngredientPopupWindow.ShowDialog();
 
-                        // Updates the list and the UI
-                        UpdateList();
-                        return;
+                        if (result == false)
+                            return;
+
+                        else
+                        {
+                            UpdateList();
+                            return;
+                        }
                     }
             }
         }
