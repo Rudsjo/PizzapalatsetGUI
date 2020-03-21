@@ -102,6 +102,16 @@ namespace AdminTerminal_v2
         public string CurrentRole { get; set; }
 
         /// <summary>
+        /// The property to set the pizzabase of a pizza
+        /// </summary>
+        public int CurrentPizzaBaseID { get; set; } = 1;
+
+        /// <summary>
+        /// The propety of the pizzabase
+        /// </summary>
+        public string CurrentPizzaBase { get; set; }
+
+        /// <summary>
         /// The public property of the selected employee
         /// </summary>
         public EmployeeViewModel Employee
@@ -177,7 +187,7 @@ namespace AdminTerminal_v2
 
                 CurrentPrice = pizza.Price.ToString();
                 CurrentType = pizza.Type;
-
+                CurrentPizzaBaseID = pizza.PizzabaseID;
             }
         }
 
@@ -348,16 +358,26 @@ namespace AdminTerminal_v2
 
                 case Navigator.Pizzas:
                     {
-                        var PizzaToUpdate = new PizzaViewModel() { Type = CurrentType, Price = float.Parse(CurrentPrice), PizzabaseID = 1 };
+                        // Checks that nothing is null
+                        if (CurrentType == null || CurrentPrice == null)
+                            return;
 
+                        // Creating a new instance of the item and fills up the properties
+                        var PizzaToUpdate = new PizzaViewModel() { Type = CurrentType, Price = float.Parse(CurrentPrice), PizzabaseID = CurrentPizzaBaseID };
+
+                        // Creating a new instance of the window
                         IngredientPopupWindow = new IngredientWindow(PizzaToUpdate);
+
+                        // And opens it up
                         Nullable<bool> result = IngredientPopupWindow.ShowDialog(); 
 
+                        // If the user closes the window without saving any changes, the return will be false
                         if(result == false)
                         {
                             return;
                         }
 
+                        // If the user clicka tha apply button, the return will be true
                         else
                         {
                             UpdateList();
@@ -431,22 +451,31 @@ namespace AdminTerminal_v2
 
                 case Navigator.Pizzas:
                     {
-                        // Creating a new instance of the item and fills up the properties
-                        if (CurrentID == null)
+                        // Checks that nothing is null
+                        if (CurrentID == null || CurrentType == null || CurrentPrice == null)
                             return;
 
-                        var PizzaToUpdate = new PizzaViewModel() { PizzaID = int.Parse(CurrentID), Type = CurrentType, Price = float.Parse(CurrentPrice), PizzabaseID = 1 };
+                        // Creating a new instance of the item and fills up the properties
+                        var PizzaToUpdate = new PizzaViewModel() { PizzaID = int.Parse(CurrentID), Type = CurrentType, Price = float.Parse(CurrentPrice), PizzabaseID = CurrentPizzaBaseID };
 
-                        // Opening in up a new window so the user can add ingredients
+                        // Creating a new instance of the window
                         IngredientPopupWindow = new IngredientWindow(PizzaToUpdate);
+
+                        // And opens it up
                         Nullable<bool> result = IngredientPopupWindow.ShowDialog();
 
+                        // If the suser closes the window without saving any changes, the return will be false
                         if (result == false)
                             return;
 
+                        // If the user clicks the apply button, the return will be true
                         else
                         {
-                            UpdateList();
+                            CurrentID = null;
+                            CurrentType = null;
+                            CurrentPrice = null;
+
+                            Task.Run(async () => await UpdateList());
                             return;
                         }
                     }

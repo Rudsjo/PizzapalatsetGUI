@@ -78,6 +78,24 @@
                 <!-- Forms -->
                 <StackPanel Grid.Column="0" Grid.Row="1" Margin="0 30 0 0">
 
+                    <!-- Pizzabase Checkboxes -->
+                    <TextBlock Text="Pizzabotten" Margin="30 0 10 0"/>
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox x:Name="ItalianBottom" Content="Italiensk" 
+                                  Margin="30 5"
+                                  IsChecked="{Binding CurrentPizzaBaseID, 
+                                              Converter={local:PizzaBottomValueConverter}, 
+                                              ConverterParameter='Italian'}"/>
+
+
+                        <CheckBox x:Name="AmericanBottom" Content="Amerikansk" 
+                                  Margin="30 5"
+                                  IsChecked="{Binding CurrentPizzaBaseID, 
+                                              Converter={local:PizzaBottomValueConverter}, 
+                                              ConverterParameter='American'}"/>
+                        
+                    </StackPanel>
+
                     <!-- Clear button -->
                     <Button BorderBrush="Transparent" BorderThickness="0"
                             Background="Transparent" HorizontalAlignment="Right"
@@ -151,6 +169,11 @@
                             <!-- Price -->
                             <GridViewColumn DisplayMemberBinding="{Binding Price}">
                                 <TextBlock Text="Pris" />
+                            </GridViewColumn>
+                            
+                            <!-- Pizzabase -->
+                            <GridViewColumn DisplayMemberBinding="{Binding Pizzabase}">
+                                <TextBlock Text="Bas" />
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>

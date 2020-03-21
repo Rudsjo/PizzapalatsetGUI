@@ -137,7 +137,7 @@ namespace BackendHandler
     public class Pizza
     {
         //Överensstämmer med databasen
-        public int PizzaID { get; }
+        public int PizzaID { get; set; }
         public string Type { get; set; }
         public float Price { get; set; }
         public int PizzabaseID { get; set; }

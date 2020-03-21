@@ -21,6 +21,7 @@ namespace AdminTerminal_v2
         /// </summary>
         public PizzaViewModel BasePizza { get; set; }
 
+
         /// <summary>
         /// The selected item in the list of available condiments
         /// </summary>
@@ -69,11 +70,11 @@ namespace AdminTerminal_v2
 
         #region Command Properties
 
-        public ICommand AddIngredient { get; set; }
+        public IAsyncCommand AddIngredient { get; set; }
 
-        public ICommand RemoveIngredient { get; set; }
+        public IAsyncCommand RemoveIngredient { get; set; }
 
-        public ICommand Confirm { get; set; }
+        public IAsyncCommand Confirm { get; set; }
 
         #endregion
 
@@ -84,6 +85,7 @@ namespace AdminTerminal_v2
         public IngredientWindowViewModel(PizzaViewModel pizza)
         {
             // Sets the Pizza property to the sent in pizza
+            BasePizza = new PizzaViewModel();
             BasePizza = pizza;
 
             // And creates a new instance of its ingredientlist...
@@ -96,9 +98,9 @@ namespace AdminTerminal_v2
             CondimentsOnPizza = new ObservableCollection<BackendHandler.Condiment>();
            
             // Calling commands
-            AddIngredient = new RelayParameterlessCommand(AddIngredientCommand);
-            RemoveIngredient = new RelayParameterlessCommand(RemoveIngredientCommand);
-            Confirm = new RelayParameterlessCommand(ConfirmCommand);
+            AddIngredient = new RelayAsyncCommand(AddIngredientCommand);
+            RemoveIngredient = new RelayAsyncCommand(RemoveIngredientCommand);
+            Confirm = new RelayAsyncCommand(ConfirmCommand);
 
             // Fills upp the lists
             UpdateIngredientLists();
@@ -111,19 +113,19 @@ namespace AdminTerminal_v2
         /// <summary>
         /// Command to add the selected ingredient in a list to the pizza
         /// </summary>
-        public void AddIngredientCommand(object e)
+        public async Task AddIngredientCommand()
         {
             // Adds the selected condiment to the pizza
             CondimentsOnPizza.Add(CondimentToAdd);
 
             // And updates the UI
-            UpdateIngredientLists();
+            await UpdateIngredientLists();
         }
 
         /// <summary>
         /// Command to remove a selected ingredient in a list from the pizza
         /// </summary>
-        public void RemoveIngredientCommand(object e)
+        public async Task RemoveIngredientCommand()
         {
             // Removes the selected condiment
             CondimentsOnPizza.Remove(CondimentToRemove);
@@ -132,20 +134,22 @@ namespace AdminTerminal_v2
             AllAvailableIngredientsList.Cast<BackendHandler.Condiment>().ToList().Add(CondimentToRemove);
 
             // Updates the lists
-            UpdateIngredientLists();
+            await UpdateIngredientLists();
         }
 
         /// <summary>
         /// Command to run when the user clicks confirm in the UI
         /// </summary>
         /// <param name="e"></param>
-        public void ConfirmCommand(object e)
+        public async Task ConfirmCommand()
         {
-            // Method to add or update a pizza in the database depending on the user choice
-            AddOrUpdatePizza();
 
-            // Closes the window and returns true since the user pressed the button
-            IngredientPopupWindow.DialogResult = true;
+                // Method to add or update a pizza in the database depending on the user choice
+                await AddOrUpdatePizza2();
+
+                // Closes the window and returns true since the user pressed the button
+                IngredientPopupWindow.DialogResult = true;
+
             
         }
 
@@ -164,14 +168,18 @@ namespace AdminTerminal_v2
                 // getting all ingredients of the sent in pizza
                 var ingredients = await rep.GetIngredientsFromSpecificPizza(BasePizza.PizzaID);
 
+                // Ordering the ingredients
+                var OrderedIngredients = ingredients.OrderBy(x => x.CondimentID);
+
                 // and updates the pizza with it
-                BasePizza.PizzaIngredients = ingredients.ToList();
+                BasePizza.PizzaIngredients = OrderedIngredients.ToList();
 
                 // Putting all the ingredients that a pizza has to the temporary condiment list
                 BasePizza.PizzaIngredients.ForEach(x =>
                 {
                     CondimentsOnPizza.Add(x);
                 });
+
             }
         }
 
@@ -209,50 +217,62 @@ namespace AdminTerminal_v2
 
         #region Command Helpers
 
+
         /// <summary>
         /// Method to update or add a pizza in the database depending on the user choice
         /// </summary>
         /// <returns></returns>
-        private async Task AddOrUpdatePizza()
+
+        private async Task AddOrUpdatePizza2()
         {
-            // Creating a new instance of a Model-Pizza
-            BackendHandler.Pizza PizzaToAddOrUpdate = new BackendHandler.Pizza();
-
-            // Checking if the pizza is a new one or one to update by checking if it has an ID
-            if(BasePizza.PizzaID != 0)
-                PizzaToAddOrUpdate = await rep.GetSinglePizza(BasePizza.PizzaID);
-
-            // Setting all the base values from the previous page to the pizza
-            PizzaToAddOrUpdate.Type = BasePizza.Type;
-            PizzaToAddOrUpdate.PizzabaseID = BasePizza.PizzabaseID;
-            PizzaToAddOrUpdate.Price = BasePizza.Price;
-
-            // Checking if the pizza is a new one or one to update by checking if it has an ID
-            // to see what methods to use towards the database
-            if (PizzaToAddOrUpdate.PizzaID != 0)
+            // If the pizza has a sent in ID it means it salready exists and should be updated
+            if(BasePizza.PizzaID > 0)
             {
-                // we instantly start by temporarily remove all ingredients from the pizza
-                foreach (var condiment in PizzaToAddOrUpdate.PizzaIngredients)
+                // Getting the pizza from the database to be able to update it
+                var PizzaToUpdate = await rep.GetSinglePizza(BasePizza.PizzaID);
+
+                // Get the previous ingredients from the sent in pizza
+                var PizzaToUpdateIngredientsList = (await rep.GetIngredientsFromSpecificPizza(PizzaToUpdate.PizzaID)).ToList();
+
+                // To make sure we update all the ingredients correctly,
+                // we first delete all existing condiments from the sent in pizza
+                foreach(var condiment in PizzaToUpdateIngredientsList)
                 {
-                    await rep.DeleteCondimentFromPizza(PizzaToAddOrUpdate, condiment);
-                    PizzaToAddOrUpdate.PizzaIngredients.Remove(condiment);
+                    await rep.DeleteCondimentFromPizza(PizzaToUpdate, condiment);
                 }
 
-                // Then we set the pizza ingredients to the same as the UI list
-                PizzaToAddOrUpdate.PizzaIngredients = BasePizza.PizzaIngredients;
+                // Then setting the actual ingredients to the pizza
+                PizzaToUpdate.PizzaIngredients = BasePizza.PizzaIngredients;
 
-                // and send them back in to the database
-                await rep.AddCondimentToPizza(PizzaToAddOrUpdate);
+                // And sending it back to the database
+                await rep.AddCondimentToPizza(PizzaToUpdate);
 
-                // lastly we update the pizzas name, price etc.
-                await rep.UpdatePizza(PizzaToAddOrUpdate);
+                // Setting all the new values to the pizza
+                PizzaToUpdate.Type = BasePizza.Type;
+                PizzaToUpdate.Price = BasePizza.Price;
+                PizzaToUpdate.PizzabaseID = BasePizza.PizzabaseID;
+
+                // And updating the pizza in the database
+                await rep.UpdatePizza(PizzaToUpdate);
+
             }
 
+            // Else it's a new pizza
             else
             {
-                await rep.AddPizza(PizzaToAddOrUpdate);
-                var PizzaToAdd = (await rep.GetAllPizzas()).Last();
+                // Creating an instance of a new Pizza with the sent in properties
+                var PizzaToAdd = new BackendHandler.Pizza() { Type = BasePizza.Type, Price = BasePizza.Price, PizzabaseID = BasePizza.PizzabaseID };
+
+                // Adding the pizza to the database
+                await rep.AddPizza(PizzaToAdd);
+
+                // Calling it back to get it with its ID
+                PizzaToAdd = (await rep.GetAllPizzas()).Last();
+
+                // Adding the ingredients
                 PizzaToAdd.PizzaIngredients = BasePizza.PizzaIngredients;
+
+                // And sending the information back to the database
                 await rep.AddCondimentToPizza(PizzaToAdd);
             }
         }

@@ -23,7 +23,7 @@ namespace AdminTerminal_v2
         /// </summary>
         public Navigator CurrentPage { get; set; } = Navigator.Pizzas;
 
-        public ObservableCollection<EmployeeViewModel> EmployeeList { get; set; }
+        //public ObservableCollection<EmployeeViewModel> EmployeeList { get; set; }
 
 
         #region Sizes
@@ -40,7 +40,7 @@ namespace AdminTerminal_v2
         /// <summary>
         /// The minimum window height
         /// </summary>
-        public static int MinWindowHeight { get; set; } = 450;
+        public static int MinWindowHeight { get; set; } = 500;
 
         /// <summary>
         /// The minimum window width
@@ -67,10 +67,6 @@ namespace AdminTerminal_v2
 
         public void NavigatorCommand(object e)
         {
-            CurrentList = null;
-            DatabaseList = null;
-            CurrentPage = Navigator.Extras;
-
             if (Enum.TryParse<Navigator>((string)e, out Navigator nav))
             {
                 CurrentPage = nav;

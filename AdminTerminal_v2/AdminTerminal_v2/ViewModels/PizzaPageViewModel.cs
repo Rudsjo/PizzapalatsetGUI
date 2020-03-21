@@ -6,6 +6,7 @@ namespace AdminTerminal_v2
 {
     public class PizzaPageViewModel : BaseViewModel
     {
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -20,8 +21,6 @@ namespace AdminTerminal_v2
             Clear = new RelayParameterlessCommand(ClearCommand);
 
             Navigate = new RelayParameterlessCommand(MainWindowViewModel.VM.NavigatorCommand);
-
-
         }
     }
 }

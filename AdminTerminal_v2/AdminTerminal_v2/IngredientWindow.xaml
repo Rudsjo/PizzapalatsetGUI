@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminTerminal_v2"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="IngredientWindow" 
         
         MaxHeight="{Binding MaxPopupWindowHeight}" MaxWidth="{Binding MaxPopupWindowWidth}"
@@ -34,7 +35,7 @@
         <StackPanel Grid.Column="1" Grid.Row="1">
             
             <!-- Pizza header -->
-            <TextBlock Text="{Binding PizzaToUpdate.Type}" />
+            <TextBlock Text="{Binding BasePizza.Type}" />
             
             <!-- Remove Button -->
             <Button Content="Ta bort" Command="{Binding RemoveIngredient}"

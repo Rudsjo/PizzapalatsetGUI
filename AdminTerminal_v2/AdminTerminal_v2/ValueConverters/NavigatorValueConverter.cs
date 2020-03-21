@@ -35,8 +35,7 @@ namespace AdminTerminal_v2
                     return new PizzaPage();
 
                 default:
-                    Debugger.Break();
-                    return null;
+                    return new LoginPage();
             }
         }
 
