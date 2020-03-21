@@ -233,12 +233,12 @@ namespace AdminTerminal_v2
         /// <summary>
         /// The command to add an item to the database
         /// </summary>
-        public ICommand Add { get; set; }
+        public IAsyncCommand Add { get; set; }
 
         /// <summary>
         /// The command to update an item in the database
         /// </summary>
-        public ICommand Update { get; set; }
+        public IAsyncCommand Update { get; set; }
 
         /// <summary>
         /// The command to delete an item from the database
@@ -338,11 +338,8 @@ namespace AdminTerminal_v2
         /// <summary>
         /// Command to add an item to the database
         /// </summary>
-        /// <typeparam name="ModelType">The model type to send in to the database</typeparam>
-        /// <typeparam name="ModelViewModelType">The current type of the item to be converted</typeparam>
-        /// <param name="ItemToAdd">The item to add</param>
         /// <returns></returns>
-        public void AddCommand(object o)
+        public async Task AddCommand()
         {
             CurrentID = "";
 
@@ -354,10 +351,10 @@ namespace AdminTerminal_v2
                         var EmployeeToAdd = new BackendHandler.Employee() { Role = CurrentRole, Password = CurrentRole };
 
                         // Calling the database and adds the item
-                        rep.AddEmployee(EmployeeToAdd);
+                        await rep.AddEmployee(EmployeeToAdd);
 
                         // Updates the list and the UI
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -367,10 +364,10 @@ namespace AdminTerminal_v2
                         var CondimentToAdd = new BackendHandler.Condiment() { Type = CurrentType, Price = float.Parse(CurrentPrice) };
 
                         // Calling the database and adds the item
-                        rep.AddCondiment(CondimentToAdd);
+                        await rep.AddCondiment(CondimentToAdd);
 
                         // Updates the list and the UI
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -380,10 +377,10 @@ namespace AdminTerminal_v2
                         var ExtraToAdd = new BackendHandler.Extra() { Type = CurrentType, Price = float.Parse(CurrentPrice) };
 
                         // Calling the database and adds the item
-                        rep.AddExtra(ExtraToAdd);
+                        await rep.AddExtra(ExtraToAdd);
 
                         // Updates the list and the UI
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -411,14 +408,14 @@ namespace AdminTerminal_v2
                         // If the user clicka tha apply button, the return will be true
                         else
                         {
-                            UpdateList();
+                            await UpdateList();
                             return;
                         }
                     }
             }
         }
 
-        public void UpdateCommand(object o)
+        public async Task UpdateCommand()
         {
             switch (MainWindowViewModel.VM.CurrentPage)
             {
@@ -435,10 +432,10 @@ namespace AdminTerminal_v2
                         EmployeeToUpdate.Role = CurrentRole;
 
                         // calling the database and updates the item
-                        rep.UpdateEmployee(EmployeeToUpdate);
+                        await rep.UpdateEmployee(EmployeeToUpdate);
 
                         // refreshes the list in the UI
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -454,10 +451,10 @@ namespace AdminTerminal_v2
                         CondimentToUpdate.Price = float.Parse(CurrentPrice);
 
                         // calling the database and updates the item
-                        rep.UpdateCondiment(CondimentToUpdate);
+                        await rep.UpdateCondiment(CondimentToUpdate);
 
                         // refreshes the list in the UI
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -473,10 +470,10 @@ namespace AdminTerminal_v2
                         ExtraToUpdate.Price = float.Parse(CurrentPrice);
 
                         // calling the database and updates the item
-                        rep.UpdateExtra(ExtraToUpdate);
+                        await rep.UpdateExtra(ExtraToUpdate);
 
                         // refreshes the list in the UI
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -506,7 +503,7 @@ namespace AdminTerminal_v2
                             CurrentType = null;
                             CurrentPrice = null;
 
-                            Task.Run(async () => await UpdateList());
+                            await UpdateList();
                             return;
                         }
                     }

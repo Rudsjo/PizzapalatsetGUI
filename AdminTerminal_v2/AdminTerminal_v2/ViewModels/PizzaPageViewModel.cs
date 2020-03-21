@@ -14,8 +14,8 @@ namespace AdminTerminal_v2
         {
             UpdateList();
 
-            Add = new RelayParameterlessCommand(AddCommand);
-            Update = new RelayParameterlessCommand(UpdateCommand);
+            Add = new RelayAsyncCommand(AddCommand);
+            Update = new RelayAsyncCommand(UpdateCommand);
             Delete = new RelayAsyncCommand(DeleteCommand);
 
             Clear = new RelayParameterlessCommand(ClearCommand);

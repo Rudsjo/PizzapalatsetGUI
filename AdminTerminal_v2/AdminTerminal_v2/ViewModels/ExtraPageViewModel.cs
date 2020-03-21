@@ -13,8 +13,8 @@ namespace AdminTerminal_v2
 
             Extra = new ExtraViewModel();
 
-            Add = new RelayParameterlessCommand(AddCommand);
-            Update = new RelayParameterlessCommand(UpdateCommand);
+            Add = new RelayAsyncCommand(AddCommand);
+            Update = new RelayAsyncCommand(UpdateCommand);
             Delete = new RelayAsyncCommand(DeleteCommand);
 
             Clear = new RelayParameterlessCommand(ClearCommand);
