@@ -74,6 +74,7 @@
                     <RowDefinition Height="10" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <!-- Old Order List-->
@@ -84,7 +85,7 @@
                           ItemsSource="{Binding CurrentList}" 
                           SelectedItem="{Binding OldOrder}"
                           FontSize="{StaticResource FontSizeVerySmall}"
-                          Margin="30 5 30 30">
+                          Margin="30 5">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding OrderID}">
@@ -97,6 +98,12 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
+                
+                
+                <!-- Delete Button -->
+                <Button Grid.Row="3" Style="{StaticResource RedActionButton}"
+                        Content="Ta bort" Margin="100 5"
+                        Command="{Binding Delete}" />
 
                 <!-- Separator -->
                 <Border Style="{StaticResource Separator}" Grid.Column="1" Grid.RowSpan="3" />

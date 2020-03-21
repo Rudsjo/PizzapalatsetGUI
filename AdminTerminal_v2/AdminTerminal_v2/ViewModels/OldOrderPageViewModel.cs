@@ -2,32 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdminTerminal_v2
 {
     public class OldOrderPageViewModel : BaseViewModel
     {
-
-        private OrderViewModel oldOrder;
-
-        public List<BackendHandler.Pizza> CurrentOrderPizzaList { get; set; }
-
-        public List<BackendHandler.Extra> CurrentOrderExtraList { get; set; }
-
-        public OrderViewModel OldOrder
-        {
-            get { return oldOrder; }
-            set
-            {
-                if (oldOrder == value)
-                    return;
-
-                oldOrder = value;
-                CurrentOrderPizzaList = oldOrder.PizzaList;
-                CurrentOrderExtraList = oldOrder.ExtraList;
-
-            }
-        }
 
         /// <summary>
         /// Default constructor
@@ -35,6 +15,11 @@ namespace AdminTerminal_v2
         public OldOrderPageViewModel()
         {
             UpdateList();
+
+            CurrentOrderPizzaList = new List<BackendHandler.Pizza>();
+            CurrentOrderExtraList = new List<BackendHandler.Extra>();
+
+            Delete = new RelayAsyncCommand(DeleteCommand);
 
             Navigate = new RelayParameterlessCommand(MainWindowViewModel.VM.NavigatorCommand);
         }

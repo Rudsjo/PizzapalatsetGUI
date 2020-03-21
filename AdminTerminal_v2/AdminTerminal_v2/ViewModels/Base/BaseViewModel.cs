@@ -55,6 +55,11 @@ namespace AdminTerminal_v2
         /// </summary>
         private string currentPrice;
 
+        /// <summary>
+        /// The current old order selected
+        /// </summary>
+        private OrderViewModel oldOrder;
+
         #endregion
 
         #region Public Properties
@@ -191,6 +196,32 @@ namespace AdminTerminal_v2
             }
         }
 
+        public OrderViewModel OldOrder
+        {
+            get { return oldOrder; }
+            set
+            {
+                if (oldOrder == value || value == null)
+                    return;
+
+                oldOrder = value;
+
+                CurrentOrderPizzaList = oldOrder.PizzaList;
+                CurrentOrderExtraList = oldOrder.ExtraList;
+
+            }
+        }
+
+        /// <summary>
+        /// The list of pizzas in the selected Old order
+        /// </summary>
+        public List<BackendHandler.Pizza> CurrentOrderPizzaList { get; set; }
+
+        /// <summary>
+        /// The list of extras in the selected Old order
+        /// </summary>
+        public List<BackendHandler.Extra> CurrentOrderExtraList { get; set; }
+
         public static IngredientWindow IngredientPopupWindow { get; set; }
 
         public static BackendHandler.Pizza PizzaToAdd { get; set; }
@@ -212,7 +243,7 @@ namespace AdminTerminal_v2
         /// <summary>
         /// The command to delete an item from the database
         /// </summary>
-        public ICommand Delete { get; set; }
+        public IAsyncCommand Delete { get; set; }
 
         /// <summary>
         /// The command to clear all current values
@@ -482,7 +513,7 @@ namespace AdminTerminal_v2
             }
         }
 
-        public void DeleteCommand(object o)
+        public async Task DeleteCommand()
         {
             CurrentID = "";
 
@@ -492,9 +523,9 @@ namespace AdminTerminal_v2
                     {
                         var EmployeeToDelete = GetSelectedItemAsModelType<BackendHandler.Employee, EmployeeViewModel>(Employee);
 
-                        rep.DeleteEmployee(EmployeeToDelete);
+                        await rep.DeleteEmployee(EmployeeToDelete);
 
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -502,9 +533,9 @@ namespace AdminTerminal_v2
                     {
                         var CondimentToDelete = GetSelectedItemAsModelType<BackendHandler.Condiment, CondimentViewModel>(Condiment);
 
-                        rep.DeleteCondiment(CondimentToDelete);
+                        await rep.DeleteCondiment(CondimentToDelete);
 
-                        UpdateList();
+                        await UpdateList();
                         return;
                     }
 
@@ -512,8 +543,8 @@ namespace AdminTerminal_v2
                     {
                         var ExtraToDelete = GetSelectedItemAsModelType<BackendHandler.Extra, ExtraViewModel>(Extra);
 
-                        rep.DeleteExtra(ExtraToDelete);
-                        UpdateList();
+                        await rep.DeleteExtra(ExtraToDelete);
+                        await UpdateList();
                         return;
                     }
 
@@ -521,8 +552,17 @@ namespace AdminTerminal_v2
                     {
                         var PizzaToDelete = GetSelectedItemAsModelType<BackendHandler.Pizza, PizzaViewModel>(Pizza);
 
-                        rep.DeletePizza(PizzaToDelete);
-                        UpdateList();
+                        await rep.DeletePizza(PizzaToDelete);
+                        await UpdateList();
+                        return;
+                    }
+
+                case Navigator.OldOrders:
+                    {
+                        var OldOrderToDelete = await rep.GetSingleOrder(oldOrder.OrderID);
+
+                        await rep.DeleteOldOrder(OldOrderToDelete);
+                        await UpdateList();
                         return;
                     }
 
