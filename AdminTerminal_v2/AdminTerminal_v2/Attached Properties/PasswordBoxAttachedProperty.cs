@@ -7,7 +7,7 @@ using System.Windows.Controls;
 namespace AdminTerminal_v2
 {
     /// <summary>
-    /// The MonitorPassword attached propert for <see cref="PasswordBox"/>
+    /// The MonitorPassword attached property for <see cref="PasswordBox"/>
     /// </summary>
     public class MonitorPasswordProperty : BaseAttachedProperty<MonitorPasswordProperty, bool>
     {
@@ -26,10 +26,11 @@ namespace AdminTerminal_v2
             // If the caller set MonitorPassword to true...
             if ((bool)e.NewValue)
             {
+
                 // Set default value
                 HasTextProperty.SetValue(passwordBox);
 
-                // Start listening out for apssword changes
+                // Start listening out for password changes
                 passwordBox.PasswordChanged += PasswordBox_PasswordChanged;
             }
         }

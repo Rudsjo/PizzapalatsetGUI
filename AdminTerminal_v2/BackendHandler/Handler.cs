@@ -162,7 +162,9 @@ namespace BackendHandler
         //De funktioner som bara skall visa innehåll har en ToString() override som stringar ex. type,role,price,id
         #region//Employee
         public Task AddEmployee(Employee emp, string storedProcedure = "AddEmployee");
-        public Task UpdateEmployee(Employee emp, string storedProcedure = "UpdateEmployeeByID");
+        public Task UpdateEmployee(Employee emp, string password, string storedProcedure = "UpdateEmployeeByID");
+
+        public Task UpdateEmployeePassword(Employee emp, string Password, string storedProcedure = "UpdatePassword");
         public Task<IEnumerable<Employee>> GetAllEmployees(string storedProcedure = "GetAllEmployees");
         public Task<Employee> GetSingleEmployee(int ID, string storedProcedure = "GetSingleEmployee");
         public Task DeleteEmployee(Employee emp, string storedProcedure = "DeleteEmployeeByID");
@@ -263,11 +265,11 @@ namespace BackendHandler
                 return (await connection.QueryAsync<Employee>(storedProcedureToShowSingleEmployee, new { UserID = id }, commandType: CommandType.StoredProcedure)).First();
             }
         }
-        public async Task UpdateEmployee(Employee emp, string storedProcedureToUpdateEmployee = "UpdateEmployeeByID")
+        public async Task UpdateEmployee(Employee emp, string password, string storedProcedureToUpdateEmployee = "UpdateEmployeeByID")
         {
             using (IDbConnection connection = new SqlConnection(ConnectionString))
             {
-                await connection.QueryAsync<Employee>(storedProcedureToUpdateEmployee, new { UserID = emp.UserID, Password = emp.Password, Role = emp.Role }, commandType: CommandType.StoredProcedure);
+                await connection.QueryAsync<Employee>(storedProcedureToUpdateEmployee, new { UserID = emp.UserID, Password = password, Role = emp.Role }, commandType: CommandType.StoredProcedure);
             }
         }
         public async Task DeleteEmployee(Employee emp, string storedProcedureToDeleteEmployee = "DeleteEmployeeByID")
@@ -605,6 +607,15 @@ namespace BackendHandler
                 await connection.QueryAsync<Order>(storedProcedure, new { EmployeeID = employee.UserID, OrderID = order.OrderID }, commandType: CommandType.StoredProcedure);
             }
         }
+
+        public async Task UpdateEmployeePassword(Employee employee, string password, string storedProcedure = "UpdatePassword")
+        {
+            using (IDbConnection connection = new SqlConnection(ConnectionString))
+            {
+                await connection.QueryAsync<Employee>(storedProcedure, new { UserID = employee.UserID, Password = password }, commandType: CommandType.StoredProcedure);
+            }
+        }
+
         #endregion
     }
 
@@ -830,11 +841,11 @@ namespace BackendHandler
             }
         }
 
-        public async Task UpdateEmployee(Employee emp, string storedProcedureToUpdateEmployee = "\"UpdateEmployeeByID\"")
+        public async Task UpdateEmployee(Employee emp, string password, string storedProcedureToUpdateEmployee = "\"UpdateEmployeeByID\"")
         {
             using (IDbConnection connection = new NpgsqlConnection(ConnectionString))
             {
-                await connection.QueryAsync<Employee>(storedProcedureToUpdateEmployee, new { _UserID = emp.UserID, _Password = emp.Password, _Role = emp.Role }, commandType: CommandType.StoredProcedure);
+                await connection.QueryAsync<Employee>(storedProcedureToUpdateEmployee, new { _UserID = emp.UserID, _Password = password, _Role = emp.Role }, commandType: CommandType.StoredProcedure);
             }
         }
 
@@ -971,6 +982,11 @@ namespace BackendHandler
                 await connection.QueryAsync<Order>(storedProcedure, new { _UserID = employee.UserID, _OrderID = order.OrderID }, commandType: CommandType.StoredProcedure);
 
             }
+        }
+
+        public Task UpdateEmployeePassword(Employee employee, string Password, string storedProcedure = "UpdatePassword")
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,11 +17,21 @@ namespace AdminTerminal_v2
     /// <summary>
     /// Interaction logic for EmployeePage.xaml
     /// </summary>
-    public partial class EmployeePage : BasePage<EmployeePageViewModel>
+    public partial class EmployeePage : BasePage<EmployeePageViewModel>, IHavePassword
     {
         public EmployeePage()
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// The secure password for the employee page when add or update
+        /// </summary>
+        public SecureString SecurePassword => NewPasswordText.SecurePassword;
+
+        public static EmployeePage Accessor { get; set; }
+
     }
 }
+       
+

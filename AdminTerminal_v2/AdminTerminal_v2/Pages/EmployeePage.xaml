@@ -95,7 +95,7 @@
 
                     <!-- Password -->
                     <TextBlock Text="Lösenord" Style="{StaticResource TextBoxHeader}"/>
-                    <PasswordBox Tag="Password" />
+                    <PasswordBox x:Name="NewPasswordText" Tag="Password" />
 
                     <!-- Role -->
                     <TextBlock Text="Roll" Style="{StaticResource TextBoxHeader}"/>
@@ -118,10 +118,12 @@
 
                         <Button Content="Lägg till" Grid.Column="1" Grid.Row="1"
                                 Style="{StaticResource GreenActionButton}"
-                                Command="{Binding Add}" />
+                                Command="{Binding AddEmployee}"
+                                CommandParameter="{Binding ElementName=Page}"/>
                         <Button Content="Uppdatera" Grid.Column="2" Grid.Row="1"
                                 Style="{StaticResource GreenActionButton}"
-                                Command="{Binding Update}" />
+                                Command="{Binding UpdateEmployee}"
+                                CommandParameter="{Binding ElementName=Page}"/>
                         <Button Content="Ta bort" Grid.Column="3" Grid.Row="1"
                                 Style="{StaticResource RedActionButton}"
                                 Command="{Binding Delete}"/>
@@ -140,12 +142,12 @@
                     <ListView.View>
                         <GridView>
                             <!-- ID -->
-                            <GridViewColumn DisplayMemberBinding="{Binding UserID}">
+                            <GridViewColumn DisplayMemberBinding="{Binding UserID}" Width="50">
                                 <TextBlock Text="ID" />
                             </GridViewColumn>
                             
                              <!-- Roll -->
-                            <GridViewColumn DisplayMemberBinding="{Binding Role}">
+                            <GridViewColumn DisplayMemberBinding="{Binding Role}" Width="100">
                                 <TextBlock Text="Roll" />
                             </GridViewColumn>
                         </GridView>

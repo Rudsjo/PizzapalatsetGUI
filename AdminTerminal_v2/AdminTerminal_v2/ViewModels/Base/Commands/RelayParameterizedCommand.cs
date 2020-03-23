@@ -12,16 +12,15 @@ namespace AdminTerminal_v2
     public class RelayParameterizedCommand : ICommand
     {
         private Action<object> _action;
-        private Predicate<object> _condition;
+        //private Predicate<object> _condition;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="action">Action to be executed</param>
-        public RelayParameterizedCommand(Action<object> action, Predicate<object> condition)
+        public RelayParameterizedCommand(Action<object> action)
         {
             _action = action;
-            _condition = condition;
         }
 
         public event EventHandler CanExecuteChanged
@@ -30,7 +29,7 @@ namespace AdminTerminal_v2
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        public bool CanExecute(object parameter) => _condition.Invoke((Task<bool>)parameter);
+        public bool CanExecute(object parameter) => true;
 
         public void Execute(object parameter) => _action.Invoke(parameter);
     }

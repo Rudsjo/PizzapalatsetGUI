@@ -37,5 +37,7 @@ namespace AdminTerminal_v2
                 Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
             }
         }
+
+
     }
 }

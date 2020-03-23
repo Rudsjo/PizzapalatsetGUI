@@ -63,6 +63,12 @@ namespace AdminTerminal_v2
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// Bool to indicate if a task i running or not
+        /// </summary>
+        public bool TaskIsRunning { get; set; }
+
         /// <summary>
         /// The repository to use
         /// </summary>
@@ -345,18 +351,6 @@ namespace AdminTerminal_v2
 
             switch (MainWindowViewModel.VM.CurrentPage)
             {
-                case Navigator.Employees:
-                    {
-                        // Creating a new instance of the item and fills up the properties - !!!! PASSWORD SKA ÄNDRAS !!!!
-                        var EmployeeToAdd = new BackendHandler.Employee() { Role = CurrentRole, Password = CurrentRole };
-
-                        // Calling the database and adds the item
-                        await rep.AddEmployee(EmployeeToAdd);
-
-                        // Updates the list and the UI
-                        await UpdateList();
-                        return;
-                    }
 
                 case Navigator.Condiments:
                     {
@@ -419,25 +413,6 @@ namespace AdminTerminal_v2
         {
             switch (MainWindowViewModel.VM.CurrentPage)
             {
-                case Navigator.Employees:
-                    {
-
-                        // Finding that item in the database list
-                        var EmployeeToUpdate = GetSelectedItemAsModelType<BackendHandler.Employee, EmployeeViewModel>(Employee);
-
-                        // updates the password - !!!! DENNA SKA ÄNDRAS !!!!
-                        EmployeeToUpdate.Password = CurrentRole;
-
-                        // updates the role
-                        EmployeeToUpdate.Role = CurrentRole;
-
-                        // calling the database and updates the item
-                        await rep.UpdateEmployee(EmployeeToUpdate);
-
-                        // refreshes the list in the UI
-                        await UpdateList();
-                        return;
-                    }
 
                 case Navigator.Condiments:
                     {

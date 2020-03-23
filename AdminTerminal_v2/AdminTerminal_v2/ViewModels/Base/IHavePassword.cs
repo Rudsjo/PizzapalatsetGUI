@@ -14,5 +14,6 @@ namespace AdminTerminal_v2
         /// The secure password
         /// </summary>
         SecureString SecurePassword { get; }
+
     }
 }
