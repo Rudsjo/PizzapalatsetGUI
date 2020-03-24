@@ -30,8 +30,16 @@
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Left"
                         Grid.Column="1">
-                <TextBox Text="{Binding UserID, Mode=OneWayToSource}" Tag="UserID" Width="150" Margin="5" Padding="3"/>
-                
+                <TextBox Text="{Binding UserID, Mode=OneWayToSource}" 
+                         Tag="UserID" Width="150" Margin="5" Padding="3">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Border BorderBrush="{StaticResource HoverBrush}" />
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                    
+                </TextBox>
+
                 <PasswordBox x:Name="PasswordText" Tag="Password" Width="150" Margin="5" Padding="3" />
 
                 <!-- Login button -->

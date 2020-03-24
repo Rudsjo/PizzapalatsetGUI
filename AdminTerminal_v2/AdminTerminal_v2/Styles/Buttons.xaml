@@ -64,6 +64,7 @@
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+                       
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
