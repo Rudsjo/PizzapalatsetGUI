@@ -6,7 +6,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AdminTerminal_v2"
-      mc:Ignorable="d" 
+    xmlns:System="clr-namespace:System;assembly=System.Runtime"
+    mc:Ignorable="d" 
       Title="PizzaPage">
 
     <Border Margin="0 0 0 5">
@@ -101,9 +102,9 @@
                             Background="Transparent" HorizontalAlignment="Right"
                             Margin="0 0 30 -10"
                             MaxWidth="15" MaxHeight="15"
-                            Command="{Binding Clear}">
-                        <Image Source="/Images/closing-x-red.png" />
-                    </Button>
+                            Content="{StaticResource ClearButtonIcon}"
+                            Command="{Binding Clear}"
+                            Style="{StaticResource ClearButton}" />
 
                     <!-- UserID-->
                     <TextBlock Text="ID" Style="{StaticResource TextBoxHeader}"/>

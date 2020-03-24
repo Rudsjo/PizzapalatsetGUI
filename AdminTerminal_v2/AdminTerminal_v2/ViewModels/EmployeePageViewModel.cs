@@ -38,7 +38,8 @@ namespace AdminTerminal_v2
 
         public EmployeePageViewModel()
         {
-            UpdateList();
+            Task.Run(async () => await UpdateList()).Wait();
+
             Employee = new EmployeeViewModel();
 
             AddEmployee = new RelayParameterizedCommand(async (parameter) => await AddEmployeeCommand(parameter));

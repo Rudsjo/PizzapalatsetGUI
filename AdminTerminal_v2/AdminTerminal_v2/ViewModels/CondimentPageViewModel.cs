@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdminTerminal_v2
 {
@@ -10,7 +11,8 @@ namespace AdminTerminal_v2
 
         public CondimentPageViewModel()
         {
-            UpdateList();
+            Task.Run(async () => await UpdateList()).Wait();
+
             Condiment = new CondimentViewModel();
 
             Add = new RelayAsyncCommand(AddCommand);

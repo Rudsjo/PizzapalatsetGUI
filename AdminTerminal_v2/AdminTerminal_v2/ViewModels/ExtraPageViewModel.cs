@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdminTerminal_v2
 {
@@ -9,7 +10,7 @@ namespace AdminTerminal_v2
 
         public ExtraPageViewModel()
         {
-            UpdateList();
+            Task.Run(async () => UpdateList()).Wait();
 
             Extra = new ExtraViewModel();
 

@@ -14,7 +14,7 @@ namespace AdminTerminal_v2
         /// </summary>
         public OldOrderPageViewModel()
         {
-            UpdateList();
+            Task.Run(async () => await UpdateList()).Wait();
 
             CurrentOrderPizzaList = new List<BackendHandler.Pizza>();
             CurrentOrderExtraList = new List<BackendHandler.Extra>();

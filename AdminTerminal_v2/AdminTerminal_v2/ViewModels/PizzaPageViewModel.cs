@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AdminTerminal_v2
 {
@@ -12,7 +13,7 @@ namespace AdminTerminal_v2
         /// </summary>
         public PizzaPageViewModel()
         {
-            UpdateList();
+            Task.Run(async () => UpdateList()).Wait();
 
             Add = new RelayAsyncCommand(AddCommand);
             Update = new RelayAsyncCommand(UpdateCommand);
