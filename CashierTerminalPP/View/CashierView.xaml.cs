@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_Kassörskan_V2.View
+namespace CashierTerminalPP.View
 {
     /// <summary>
     /// Interaction logic for CashierView.xaml

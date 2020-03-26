@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace WPF_Kassörskan_V2.Command
+namespace CashierTerminalPP.Commands
 {
-    public class PageRelayCommand : ICommand
+    public class RelayCommand : ICommand
     {
         #region Private Members
         private Action<object> _action;
@@ -19,7 +19,8 @@ namespace WPF_Kassörskan_V2.Command
         }
 
         #region Constructor
-        public PageRelayCommand(Action<object> action)
+
+        public RelayCommand(Action<object> action)
             : this(action, null)
         {
         }
@@ -28,7 +29,7 @@ namespace WPF_Kassörskan_V2.Command
         /// </summary>
         /// <param name="action">What method to run</param>
         /// <param name="condition">If the method can run</param>
-        public PageRelayCommand(Action<object> action, Predicate<object> condition)
+        public RelayCommand(Action<object> action, Predicate<object> condition)
         {
             _action = action;
             _condition = condition;

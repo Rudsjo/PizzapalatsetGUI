@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:WPF_Kassörskan_V2">
+                    xmlns:local="clr-namespace:CashierTerminalPP">
     <!-- Light grey -->
     <Color x:Key="Light">#e4ecf2</Color>
     <SolidColorBrush x:Key="LightBrush" Color="{StaticResource Light}" />
