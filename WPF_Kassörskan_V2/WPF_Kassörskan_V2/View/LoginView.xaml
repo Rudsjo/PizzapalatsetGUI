@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="WPF_Kassörskan_V2.View.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:WPF_Kassörskan_V2.View"
+             xmlns:viewmodels="clr-namespace:WPF_Kassörskan_V2.ViewModel"
+             mc:Ignorable="d" Style="{StaticResource Base}"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+
+    <!--#region UserControl Resources-->
+    <UserControl.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:CashierViewModel}">
+            <views:CashierView/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <!--#endregion-->
+    <StackPanel VerticalAlignment="Center" Margin="0 -100 0 0">
+        <Image Source="/Images/PP-Logo.png" MaxHeight="200" MaxWidth="200"/>
+
+        <!-- User ID and Password -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="1.1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Right"
+                        Grid.Column="0">
+                <TextBlock Text="AnvändarID" Margin="5" FontSize="{StaticResource FontSizeSmall}" />
+                <TextBlock Text="Lösenord" Margin="5" FontSize="{StaticResource FontSizeSmall}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical"
+                        HorizontalAlignment="Left"
+                        Grid.Column="1">
+                <TextBox Width="150" Margin="5" Padding="3" Text="{Binding UserID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!--Tidigare version utan passwordhiding-->
+                <TextBox Width="150" Margin="5" Padding="3" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <!--Denna styrs med hjälp av securestring samt i codebehind-->
+
+
+                <!-- Login button -->
+                <Button Content="Logga in" 
+                        Style="{StaticResource LoginButton}"
+                        Command="{Binding CashierPageCommand}"/>
+
+            </StackPanel>
+
+        </Grid>
+    </StackPanel>
+
+</UserControl>

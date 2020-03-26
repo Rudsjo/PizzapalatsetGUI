@@ -12,16 +12,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="BackendHandler">
-      <HintPath>C:\Users\pette\Desktop\GitTest\LibraryOnGit\DatabasePizza\BackendHandler\bin\Debug\netcoreapp3.1\BackendHandler.dll</HintPath>
-    </Reference>
+    <Resource Include="Images\PP-Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Desktop\BackendHandler\BackendHandler.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Images\component.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Images\PP-Logo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
