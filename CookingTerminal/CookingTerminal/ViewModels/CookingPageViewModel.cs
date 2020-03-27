@@ -4,7 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace CookingTerminal
 {
@@ -17,14 +20,27 @@ namespace CookingTerminal
         /// </summary>
         private OrderViewModel _orderToCook { get; set; }
 
+        private DispatcherTimer CookingTimer { get; set; }
+
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// The lsit of foods to cook
+        /// </summary>
         public ObservableCollection<PizzaViewModel> FoodsToCook { get; set; }
 
+        /// <summary>
+        /// The list of cooked foods
+        /// </summary>
         public ObservableCollection<PizzaViewModel> CookedFoods { get; set; }
 
-        public bool IsVisible { get; set; }
+        /// <summary>
+        /// The visibility property of the serve button
+        /// It goes visible when there is no more foods to cook
+        /// </summary>
+        public Visibility ServeButtonVisibility { get; set; } = Visibility.Hidden;
 
         #endregion
 
@@ -33,12 +49,8 @@ namespace CookingTerminal
         /// <summary>
         /// Command to put a pizza in the oven
         /// </summary>
-        public ICommand PutPizzaInOven { get; set; }
+        public ICommand CookFood { get; set; }
 
-        /// <summary>
-        /// Command to take out a pizza from the oven
-        /// </summary>
-        public ICommand TakeOutPizzaFromOven { get; set; }
 
         /// <summary>
         /// Command to complete an order and send it to cashier
@@ -50,6 +62,7 @@ namespace CookingTerminal
         #region Constructor
         public CookingPageViewModel()
         {
+
             // Getting the chosen order from the static reference
             _orderToCook = OrderToCook;
 
@@ -62,23 +75,43 @@ namespace CookingTerminal
 
             // Updates the lists
             UpdateCookingList();
-            
+
             // Creating new commands
-            PutPizzaInOven = new RelayCommand((object pizzaID) => 
+            CookFood = new RelayCommand((object pizzaID) =>
             {
+
                 // Get the selected pizza
                 var CookedPizza = FoodsToCook.Where(x => x.PizzaID == (int)pizzaID).First();
-                // Changes the cooking status
-                CookedPizza.CookingStatus = 2;
-                // Updates the list
-                UpdateCookingList();
+
+                // Check the Cooking status of the pizza
+                switch (CookedPizza.CookingStatus)
+                {
+                    case CookingStatus.IsNotCooked:
+                        {
+                            CookedPizza.CookingStatus = CookingStatus.IsCooked;
+                            CookedPizza.CookingButtonContent = "Ta ut ur ugn";
+                            return;
+                        }
+
+                    // Placeholder in case of implementation of cooking timer
+                    case CookingStatus.IsCooking:
+                        {
+                            CookedPizza.CookingStatus = CookingStatus.IsCooked;
+                            CookedPizza.CookingButtonContent = "Ta ut ur ugn";
+                            return;
+                        }
+
+                    case CookingStatus.IsCooked:
+                        {
+                            UpdateCookingList();
+                            return;
+                        }
+                }
+                
             });
-
-
         }
 
         #endregion
-
 
         #region Private Methods
 
@@ -96,20 +129,23 @@ namespace CookingTerminal
         /// </summary>
         private void UpdateCookingList()
         {
+            // Goes thorugh all foods and places them in the right list
             FoodsToCook.ToList().ForEach(food => 
             {
-                if (food.CookingStatus == 2)
+                if (food.CookingStatus == CookingStatus.IsCooked)
                 {
                     CookedFoods.Add(food);
                     FoodsToCook.Remove(food);
                 }
-
-
             });
+
+
+            // Checks if there is any food left to cook
+            // If it's not, the serve button will be visible
+            if (FoodsToCook.Count == 0)
+                ServeButtonVisibility = Visibility.Visible;
         }
 
         #endregion
-
-
     }
 }
