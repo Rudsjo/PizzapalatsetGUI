@@ -40,7 +40,7 @@ namespace CookingTerminal
         /// The visibility property of the serve button
         /// It goes visible when there is no more foods to cook
         /// </summary>
-        public Visibility ServeButtonVisibility { get; set; } = Visibility.Hidden;
+        public bool ServeButtonVisibility { get; set; } = false;
 
         #endregion
 
@@ -143,7 +143,7 @@ namespace CookingTerminal
             // Checks if there is any food left to cook
             // If it's not, the serve button will be visible
             if (FoodsToCook.Count == 0)
-                ServeButtonVisibility = Visibility.Visible;
+                ServeButtonVisibility = true;
         }
 
         #endregion
