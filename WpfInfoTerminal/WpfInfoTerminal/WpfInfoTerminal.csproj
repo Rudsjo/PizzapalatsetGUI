@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\**" />
+    <EmbeddedResource Remove="Views\**" />
+    <None Remove="Views\**" />
+    <Page Remove="Views\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="pp-logo.png" />
   </ItemGroup>
 
@@ -15,11 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\BackendHandler\BackendHandler.csproj" />
+    <ProjectReference Include="..\BackendHandler\BackendHandler.csproj" />
   </ItemGroup>
 
 </Project>

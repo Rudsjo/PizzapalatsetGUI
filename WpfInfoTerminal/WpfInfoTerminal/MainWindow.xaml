@@ -6,11 +6,7 @@
         xmlns:local="clr-namespace:WpfInfoTerminal"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
-    <Window.Resources>
-        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
-            <Setter Property="Visibility" Value="Collapsed"/>
-        </Style>
-    </Window.Resources>
+ 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -23,40 +19,84 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        
         <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
             <Image Margin="25" Height="125" Width="100" Source="pp-logo.png" />
         </StackPanel>
+        
         <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <TextBlock Margin="0 0 0 0" Text="Under tillagning" FontSize="35" FontFamily="Montserrat" FontWeight="Bold" />
+            <TextBlock Text="Under tillagning" FontSize="35" FontFamily="Montserrat" FontWeight="Bold" />
         </StackPanel>
+        
         <StackPanel Grid.Row="2">
             <Border BorderBrush="#1E1E1E26" BorderThickness="1" Width="700" CornerRadius="5"/>
         </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Vertical">
-            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="70 0 0 0" Width="150" Foreground="#651919" IsHitTestVisible="False" BorderBrush="{x:Null}" ItemsSource="{Binding OrdersOngoing}" FontSize="35" FontFamily="Montserrat" FontWeight="Bold">
-                <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                        <GridViewColumn Width="150" DisplayMemberBinding="{Binding OrderID}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+
+        <StackPanel Grid.Row="3" HorizontalAlignment="Center" Background="{x:Null}">
+            
+            <ListBox HorizontalContentAlignment="Center" SelectionMode="Single" IsHitTestVisible="False"
+                     ItemsSource="{Binding OrdersOngoing}" 
+                     Background="{x:Null}"
+                     BorderBrush="{x:Null}">
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Button Margin="30" Height="100" Width="100" Foreground="{StaticResource WineRedBrush}" IsEnabled="False"
+                                    Style="{StaticResource InfoButton}"
+                                    Content="{Binding OrderID}"
+                                    FontFamily="{StaticResource MontserratRegular}" 
+                                    FontSize="{StaticResource FontSizeLarge}">
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
+        
         <Border Grid.RowSpan="4" Grid.Column="1" Grid.Row="1" Width="7" Height="900" Margin="0 0 0 0" HorizontalAlignment="Center" Background="#1E1E1E26" CornerRadius="5">
         </Border>
+        
         <StackPanel Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Top">
             <TextBlock Margin="0 0 0 0" Text="Redo att hämtas" FontSize="35" FontFamily="Montserrat" FontWeight="Bold" />
         </StackPanel>
+        
         <StackPanel Grid.Row="2" Grid.Column="2">
             <Border BorderBrush="#1E1E1E26" BorderThickness="1" Width="700" CornerRadius="5"/>
         </StackPanel>
-        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Vertical">
-            <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="70 0 0 0" Width="150" Foreground="#4C884D" IsHitTestVisible="False" BorderBrush="{x:Null}" ItemsSource="{Binding OrdersReadyToServe}" FontSize="35" FontFamily="Montserrat" FontWeight="Bold">
-                <ListView.View>
-                    <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                        <GridViewColumn Width="150" DisplayMemberBinding="{Binding OrderID}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+
+        <StackPanel Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Background="{x:Null}">
+
+            <ListBox HorizontalContentAlignment="Center" SelectionMode="Single" IsHitTestVisible="False"
+                     ItemsSource="{Binding OrdersReadyToServe}" 
+                     Background="{x:Null}"
+                     BorderBrush="{x:Null}">
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Button Margin="30" Height="100" Width="100" Foreground="{StaticResource GreenBrush}" IsEnabled="False"
+                                    Style="{StaticResource InfoButton}"
+                                    Content="{Binding OrderID}"
+                                    FontFamily="{StaticResource MontserratRegular}" 
+                                    FontSize="{StaticResource FontSizeLarge}">
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </StackPanel>
     </Grid>
 </Window>

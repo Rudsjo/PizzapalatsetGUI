@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfInfoTerminal", "WpfInfoTerminal\WpfInfoTerminal.csproj", "{24F756E3-3478-406B-9AEA-3DC03E143897}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendHandler", "..\..\..\Desktop\BackendHandler\BackendHandler.csproj", "{77B9830E-4672-42AC-A6F0-5ECBA37D6E21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendHandler", "BackendHandler\BackendHandler.csproj", "{3C34C400-3317-4C82-84E4-0A18D7FCA8E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{24F756E3-3478-406B-9AEA-3DC03E143897}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{24F756E3-3478-406B-9AEA-3DC03E143897}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{24F756E3-3478-406B-9AEA-3DC03E143897}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77B9830E-4672-42AC-A6F0-5ECBA37D6E21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77B9830E-4672-42AC-A6F0-5ECBA37D6E21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77B9830E-4672-42AC-A6F0-5ECBA37D6E21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77B9830E-4672-42AC-A6F0-5ECBA37D6E21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C34C400-3317-4C82-84E4-0A18D7FCA8E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C34C400-3317-4C82-84E4-0A18D7FCA8E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C34C400-3317-4C82-84E4-0A18D7FCA8E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C34C400-3317-4C82-84E4-0A18D7FCA8E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
