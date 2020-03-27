@@ -66,7 +66,7 @@
         {
             GetAllOrders();
             CurrentOrder = new OrderModel();
-            UpdateRelayCommand = new RelayCommand(Update);
+            UpdateRelayCommand = new RelayCommand(Update, CanUpdate);
         }
         #endregion
 
@@ -80,6 +80,14 @@
             orderToUpdate.OrderID = CurrentOrder.OrderID;
             await rep.UpdateOrderStatusWhenOrderIsServed(employeeLoggedIn, orderToUpdate);
             await GetAllOrders();
+        }
+
+        private bool CanUpdate(object u)
+        {
+            if (CurrentOrder != null)
+                return true;
+            else
+                return false;
         }
         #endregion
     }

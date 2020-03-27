@@ -46,6 +46,7 @@
         <StackPanel Grid.Row="3">
             <TextBlock Width="500" Height="60" Text="Klicka på den order som kunden hämtar ut för att" FontSize="20" FontFamily="Montserrat" Foreground="#707070"/>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="4">
             <TextBlock Text="markera den som serverad." FontSize="20" FontFamily="Montserrat" Foreground="#707070"/>
         </StackPanel>
@@ -59,25 +60,80 @@
             StrokeThickness="3" VerticalAlignment="Center"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="6">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="6"/>
+        
+        <StackPanel HorizontalAlignment="Center" Grid.Row="7"/>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7"/>
+
+        <StackPanel HorizontalAlignment="Center" Grid.Row="6">
+
+
+            <ListBox Name="itemsCtrl" HorizontalContentAlignment="Center" SelectionMode="Single"
+                     ItemsSource="{Binding OrderList}" 
+                     SelectedItem="{Binding CurrentOrder}"
+                     Background="{x:Null}"
+                     BorderBrush="{x:Null}">
+
+<!--#region ListBox resources-->
+
+                <ListBox.Resources>
+
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource Self}}" 
+                                         Value="True" >
+                                <Setter Property="IsSelected" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Grid Background="{x:Null}">
+                                        <Button x:Name="marker" Width="90" VerticalAlignment="Bottom" 
+                                                Opacity="0.4" Visibility="Hidden" Background="{StaticResource WineRedBrush}" />
+                                        <ContentPresenter/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger    Property="IsMouseOver" Value="True">
+                                            <Setter Property="Visibility"
+                                                    TargetName="marker"
+                                                    Value="Visible" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.Resources>
+<!--#endregion-->
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Button Margin="20" Height="100" Width="100" Background="Transparent" Foreground="#4C884D"
+                                    Style="{StaticResource ItemButton}"
+                                    Content="{Binding OrderID}"
+                                    FontFamily="{StaticResource MontserratRegular}" 
+                                    FontSize="{StaticResource FontSizeLarge}"
+                                    CommandParameter="{Binding CurrentOrder}"
+                                    Command="{Binding DataContext.UpdateRelayCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}">
+
+                            </Button>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
         </StackPanel>
-        <StackPanel HorizontalAlignment="Center" Grid.Row="7" >
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="7">
-            <Button Style="{StaticResource AddUpdateButton}" Margin="10 0 10 100" Content="Servera" Width="200" Height="100" Command="{Binding UpdateRelayCommand}" />
-        </StackPanel>
-
-        <StackPanel HorizontalAlignment="Center" Grid.Row="6" Margin="0 47 0 0">
-
-            <ListView Width="500"  Height="400" Foreground="#4C884D" Name="dgCashiers" Grid.Row="6" Grid.Column="1" Margin="5,5,8,8" FontFamily="Montserrat" FontSize="25" SelectedItem="{Binding CurrentOrder}" SelectionMode="Single" ItemsSource="{Binding OrderList}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="200" DisplayMemberBinding="{Binding OrderID}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+        
+        
         <StackPanel Orientation="Horizontal" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button Style="{StaticResource LogoutButton}" Height="50" Width="100" Content="Logga ut" Command="{Binding LoginPageCommand}" Margin="10" />
         </StackPanel>
