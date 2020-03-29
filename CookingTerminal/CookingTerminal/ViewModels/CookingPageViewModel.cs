@@ -20,8 +20,6 @@ namespace CookingTerminal
         /// </summary>
         private OrderViewModel _orderToCook { get; set; }
 
-        private DispatcherTimer CookingTimer { get; set; }
-
         #endregion
 
         #region Public Properties
@@ -74,42 +72,12 @@ namespace CookingTerminal
             Task.Run(async () => await GetFoodsFromOrder()).Wait();
 
             // Updates the lists
-            UpdateCookingList();
+            //UpdateCookingList();
 
             // Creating new commands
-            CookFood = new RelayCommand((object pizzaID) =>
-            {
+            CookFood = new RelayCommand(CookFoodCommand);
 
-                // Get the selected pizza
-                var CookedPizza = FoodsToCook.Where(x => x.PizzaID == (int)pizzaID).First();
-
-                // Check the Cooking status of the pizza
-                switch (CookedPizza.CookingStatus)
-                {
-                    case CookingStatus.IsNotCooked:
-                        {
-                            CookedPizza.CookingStatus = CookingStatus.IsCooked;
-                            CookedPizza.CookingButtonContent = "Ta ut ur ugn";
-                            return;
-                        }
-
-                    // Placeholder in case of implementation of cooking timer
-                    case CookingStatus.IsCooking:
-                        {
-                            CookedPizza.CookingStatus = CookingStatus.IsCooked;
-                            CookedPizza.CookingButtonContent = "Ta ut ur ugn";
-                            return;
-                        }
-
-                    case CookingStatus.IsCooked:
-                        {
-                            UpdateCookingList();
-                            return;
-                        }
-                }
-                
-            });
-        }
+           }
 
         #endregion
 
@@ -121,29 +89,73 @@ namespace CookingTerminal
         /// <returns></returns>
         private async Task GetFoodsFromOrder()
         {
+            // Getting all the foods
             FoodsToCook = await ViewModelhelpers.FillListFromDatabase<BackendHandler.Pizza, PizzaViewModel>(_orderToCook.PizzaList);
+
+            // Setting the index
+            foreach(var food in FoodsToCook)
+            {
+                food.ListIndex = FoodsToCook.IndexOf(food);
+            }
         }
 
         /// <summary>
         /// Checks if a food has been cooked and updates the lists
         /// </summary>
-        private void UpdateCookingList()
+        private void UpdateCookingList(PizzaViewModel food)
         {
-            // Goes thorugh all foods and places them in the right list
-            FoodsToCook.ToList().ForEach(food => 
-            {
-                if (food.CookingStatus == CookingStatus.IsCooked)
-                {
-                    CookedFoods.Add(food);
-                    FoodsToCook.Remove(food);
-                }
-            });
-
+            // Changes place of the cooked food
+            CookedFoods.Add(food);
+            FoodsToCook.Remove(food);
 
             // Checks if there is any food left to cook
             // If it's not, the serve button will be visible
             if (FoodsToCook.Count == 0)
                 ServeButtonVisibility = true;
+        }
+
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Command to be used to cook or take out food from the oven.
+        /// Also starts the timer when the pizza goes in the oven.
+        /// </summary>
+        /// <param name="foodID">The ID of the food to cook</param>
+        public void CookFoodCommand(object index)
+        {
+            // Get the selected food
+            var CookedPizza = FoodsToCook.Where(x => x.ListIndex == (int)index).First();
+
+            // Check the Cooking status of the pizza
+            switch (CookedPizza.CookingStatus)
+            {
+                // If the food is not cooked and the button is clicked...
+                case CookingStatus.IsNotCooked:
+                    {
+                        // The status will change to cooking
+                        CookedPizza.CookingStatus = CookingStatus.IsCooking;
+
+                        // And the content will update to the timer
+                        CookedPizza.CookingButtonContent = TimeSpan.FromSeconds(CookedPizza.CookingTime).ToString("mm\\:ss");
+
+                        // And the timer will start
+                        // The timer will set the status to cooked when it's finished
+                        CookedPizza.StartTimer();
+
+                        return;
+                    }
+
+                // When the food is cooked...
+                case CookingStatus.IsCooked:
+                    {
+                        // The list will update
+                        UpdateCookingList(CookedPizza);
+                        return;
+                    }
+            }
         }
 
         #endregion

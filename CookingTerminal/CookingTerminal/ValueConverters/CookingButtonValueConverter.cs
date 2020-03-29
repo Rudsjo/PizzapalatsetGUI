@@ -18,7 +18,7 @@ namespace CookingTerminal
 
                 case CookingStatus.IsCooking:
                     {
-                        return App.Current.Resources[string.Format("GreenActionButton")];
+                        return App.Current.Resources[string.Format("CookingTimer")];
                     }
 
                 case CookingStatus.IsCooked:
