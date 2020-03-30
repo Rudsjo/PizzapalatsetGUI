@@ -82,6 +82,7 @@
             await GetAllOrders();
         }
 
+        #region Predicate
         private bool CanUpdate(object u)
         {
             if (CurrentOrder != null)
@@ -89,6 +90,8 @@
             else
                 return false;
         }
+        #endregion
+
         #endregion
     }
 }

@@ -11,6 +11,8 @@
     public class LoginViewModel : INotifyPropertyChanged
     {
 
+        #region Properties
+
         private string _userID;
         public string UserID
         {
@@ -46,12 +48,18 @@
             set { OnPropertyChanged(ref _switchView, value); }
         }
 
+        #endregion
+
+        #region Constructor
         public LoginViewModel()
         {
             CashierPageCommand = new PageRelayCommand(ShowCashierPage);
             LoginPageCommand = new PageRelayCommand(ShowLoginPage);
         }
 
+        #endregion
+
+        #region ActionMethods
         private async void ShowCashierPage(object u)
         {
             var id = int.TryParse(UserID, out int validInput);
@@ -67,7 +75,6 @@
             {
                 MessageBox.Show("Fel användarnamn eller lösenord");
             }
-
         }
 
         private async void ShowLoginPage(object u)
@@ -78,7 +85,7 @@
             SelectedViewModel = new LoginViewModel();
             SelectedViewModel = null;
         }
-
+        #endregion
 
         #region RelayCommands for Buttons
         public RelayCommand UpdateRelayCommand { get; set; }

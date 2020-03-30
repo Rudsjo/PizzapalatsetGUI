@@ -22,5 +22,18 @@ namespace WPF_Kassörskan_V2.View
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// This is the event that keeps track of what is written in passwordbox and lets us hide the password
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if(this.DataContext != null)
+            {
+                ((dynamic)this.DataContext).Password = ((PasswordBox)sender).Password;
+            }
+        }
     }
 }

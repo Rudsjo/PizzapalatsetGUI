@@ -28,20 +28,17 @@
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Right"
                         Grid.Column="0">
-                <TextBlock Text="AnvändarID" Margin="5" FontSize="{StaticResource FontSizeSmall}" />
-                <TextBlock Text="Lösenord" Margin="5" FontSize="{StaticResource FontSizeSmall}"/>
+                <TextBlock Text="AnvändarID" Margin="7" FontSize="{StaticResource FontSizeSmall}" />
+                <TextBlock Text="Lösenord" Margin="7 5" FontSize="{StaticResource FontSizeSmall}"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical"
                         HorizontalAlignment="Left"
                         Grid.Column="1">
+
+                <!--Text and passwordbox for user input-->
                 <TextBox Width="150" Margin="5" Padding="3" Text="{Binding UserID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <!--Tidigare version utan passwordhiding-->
-                <TextBox Width="150" Margin="5" Padding="3" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
-                <!--Denna styrs med hjälp av securestring samt i codebehind-->
-
+                <PasswordBox Width="150" Margin="5" Padding="3" PasswordChanged="PasswordBox_PasswordChanged"/>
 
                 <!-- Login button -->
                 <Button Content="Logga in" 

@@ -68,14 +68,16 @@
 
         <StackPanel HorizontalAlignment="Center" Grid.Row="6">
 
-
+            
+            <!--ListBox for handling the deliver orderbuttons-->
+            
             <ListBox Name="itemsCtrl" HorizontalContentAlignment="Center" SelectionMode="Single"
                      ItemsSource="{Binding OrderList}" 
                      SelectedItem="{Binding CurrentOrder}"
                      Background="{x:Null}"
                      BorderBrush="{x:Null}">
 
-<!--#region ListBox resources-->
+                <!--#region ListBox resources and templates-->
 
                 <ListBox.Resources>
 
@@ -107,12 +109,14 @@
                         </Setter>
                     </Style>
                 </ListBox.Resources>
-<!--#endregion-->
+
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="3"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
+
+                <!--#endregion-->
 
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -133,6 +137,7 @@
 
         </StackPanel>
         
+        <!-- Logout button -->
         
         <StackPanel Orientation="Horizontal" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Right">
             <Button Style="{StaticResource LogoutButton}" Height="50" Width="100" Content="Logga ut" Command="{Binding LoginPageCommand}" Margin="10" />
