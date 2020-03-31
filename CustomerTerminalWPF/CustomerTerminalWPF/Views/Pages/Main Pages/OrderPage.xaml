@@ -1,0 +1,382 @@
+﻿<vs:BasePage x:Class="CustomerTerminalWPF.Views.Pages.OrderPage"
+             x:TypeArguments="vm:OrderPageViewModel"
+                     
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CustomerTerminalWPF"
+      xmlns:vm="clr-namespace:CustomerTerminalWPF.ViewModels"
+      xmlns:vs="clr-namespace:CustomerTerminalWPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1800"
+      Background="White">
+    <Grid>
+        <Grid>
+
+            <Grid.Background>
+                <ImageBrush ImageSource="/Views/Images/BG.png"/>
+            </Grid.Background>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="130" x:Name="RowOne"/>
+                <RowDefinition Height="130"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- Top border -->
+            <Border Height="{Binding Height, ElementName=RowOne}" VerticalAlignment="Top" Background="{StaticResource LightGraySolid}" Grid.Row="0">
+                <Grid>
+
+                    <Border Background="{StaticResource HoverGraySolid}"  Height="10" BorderThickness="0" VerticalAlignment="Bottom"/>
+
+                    <!-- All the category buttons-->
+                    <StackPanel Orientation="Horizontal" Margin="0,0,200,0">
+                        <RadioButton Style="{StaticResource CategoryButton}" 
+                        Content="Pizzor" 
+                        IsChecked="True"
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Tag="Pizza"
+                        Command="{Binding CategorySelectCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
+
+                        <RadioButton Style="{StaticResource CategoryButton}" 
+                        Content="Pasta" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Tag="Pasta"
+                        Command="{Binding CategorySelectCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
+
+                        <RadioButton Style="{StaticResource CategoryButton}" 
+                        Content="Sallader" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Tag="Sallad"
+                        Command="{Binding CategorySelectCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
+
+                        <RadioButton Style="{StaticResource CategoryButton}" 
+                        Content="Tillbehör" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Tag="Extra"
+                        Command="{Binding CategorySelectCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
+
+                        <RadioButton Style="{StaticResource CategoryButton}" 
+                        Content="Dryck" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Tag="Drink"
+                        Command="{Binding CategorySelectCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=Tag}"/>
+
+                    </StackPanel>
+
+                    <!-- Grid for all the seperators -->
+                    <Grid Margin="0,0,200,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Rectangle Fill="{StaticResource SeperatorColorSolid}" Width="3" Height="80" RadiusX="20" RadiusY="5" HorizontalAlignment="Right" Margin="0,0,-1,0" Grid.Column="0"/>
+                        <Rectangle Fill="{StaticResource SeperatorColorSolid}" Width="3" Height="80" RadiusX="20" RadiusY="5" HorizontalAlignment="Right" Margin="0,0,-1,0" Grid.Column="1"/>
+                        <Rectangle Fill="{StaticResource SeperatorColorSolid}" Width="3" Height="80" RadiusX="20" RadiusY="5" HorizontalAlignment="Right" Margin="0,0,-1,0" Grid.Column="2"/>
+                        <Rectangle Fill="{StaticResource SeperatorColorSolid}" Width="3" Height="80" RadiusX="20" RadiusY="5" HorizontalAlignment="Right" Margin="0,0,-1,0" Grid.Column="3"/>
+                        <Rectangle Fill="{StaticResource SeperatorColorSolid}" Width="3" Height="80" RadiusX="20" RadiusY="5" HorizontalAlignment="Right" Margin="0,0,-1,0" Grid.Column="4"/>
+                    </Grid>
+
+                    <!-- Tonys Logo -->
+                    <Image Source="/Views/Images/Logo.png" Height="130" Width="150" HorizontalAlignment="Right" VerticalAlignment="Top" Stretch="None" Margin="0,-10,30,0"/>
+
+                </Grid>
+            </Border>
+
+            <Button Grid.Row="1" Margin="0,0,30,0" Style="{StaticResource CancelButton}" VerticalAlignment="Center" HorizontalAlignment="Right" Command="{Binding CancelCommand}"/>
+            <TextBlock x:Name="PageText" Grid.Row="1" Text="{Binding CurrentMenu, Converter={local:TypeToStringConverter}}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="40" Margin="30,0,0,0" FontWeight="Bold" FontFamily="Plantin MT Std" Foreground="{StaticResource TextGraySolid}"/>
+
+            <Grid Grid.Row="2">
+
+                <Grid.ColumnDefinitions>
+
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="1*"/>
+
+                </Grid.ColumnDefinitions>
+
+                <!-- View for all of the products -->
+                <ListView x:Name="LbItems" Grid.Column="0" Margin="0,0,30,0" ScrollViewer.VerticalScrollBarVisibility="Visible" ItemsSource="{Binding PagedProducts}" BorderThickness="0" Background="Transparent">
+
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="3" VerticalAlignment="Top"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Border Width="300" Height="300" BorderThickness="0">
+                                            <Grid>
+
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="200"/>
+                                                    <RowDefinition Height="1*"/>
+                                                </Grid.RowDefinitions>
+
+                                                <Image Grid.Row="0" Source="/Views/Images/Bild_Saknas.png" Margin="0,10,0,10"/>
+                                                <Button Grid.Row="0" Width="60" Height="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,5" 
+                                                        Command="{Binding ElementName=LbItems, Path=DataContext.AddProductCommand}" CommandParameter="{Binding ProductID}"
+                                                        Style="{StaticResource RoundAddButton}" FontSize="40"/>
+
+                                                <StackPanel Grid.Row="1">
+                                                    <Grid>
+
+                                                        <!-- Price and Name of the product-->
+                                                        <TextBlock Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"  FontSize="20" FontWeight="Bold" FontFamily="Plantin MT Std" Text="{Binding Name}"/>
+                                                        <TextBlock Margin="0,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" FontSize="20" FontWeight="Bold" FontFamily="Plantin MT Std">
+                                                        <Run Text="{Binding Price}"/> <Run Text="kr"/>
+                                                        </TextBlock>
+                                                    </Grid>
+                                                    <!-- Ingredients, if the product has any -->
+                                                    <TextBlock Text="{Binding Ingredients, Converter={local:IngredientsToStringConverter}}"
+                                                        FontSize="15" Margin="10,10,10,0" TextWrapping="Wrap"
+                                                        VerticalAlignment="Top"
+                                                        FontFamily="{StaticResource Manti}" 
+                                                        Foreground="{StaticResource TextGraySolid}"
+                                                        Visibility="{Binding IsEditable, Converter={local:BoolToVisibilityConverter}}"/>
+
+                                                </StackPanel>
+
+
+                                            </Grid>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                </ListView>
+
+                <!-- Just for the effect -->
+                <Border Grid.Column="1" Margin="25,0,0,0" Background="{StaticResource LightGraySolid}" Opacity=".75" BorderThickness="1" CornerRadius="0">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="5" Color="{StaticResource LightGray}"/>
+                    </Border.Effect>
+                </Border>
+
+                <Border Grid.Column="1" Margin="30,5,0,0" Background="White" Padding="30">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height=".2*"/>
+                            <RowDefinition Height="3"/>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height=".25*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" 
+                               Text="Din Beställning" 
+                               VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                               Margin="10,0,0,25" 
+                               Foreground="{StaticResource TextGraySolid}" 
+                               FontSize="30" FontFamily="Plantin MT Std" FontWeight="Bold"/>
+
+                        <!-- Decoration Rectangele -->
+                        <Rectangle Margin="10,0,0,0" Grid.Row="1" Height="3"  RadiusX="5" RadiusY="5" Fill="{StaticResource SeperatorColorSolid}"/>
+
+                        <!-- ListView for the current order -->
+                        <ListView x:Name="LvBasket" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Visible" BorderThickness="0" Margin="0,10,0,0" ItemsSource="{Binding OrderItems}" ScrollViewer.CanContentScroll="False">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+
+                                    <!-- Static width -->
+                                    <Setter Property="Width" Value="490"/>
+
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+
+                                                <StackPanel Margin="10,0,10,0"
+                                                            RenderTransformOrigin="0.5,0.5" 
+                                                            RenderOptions.BitmapScalingMode="HighQuality">
+
+                                                    <StackPanel.RenderTransform>
+                                                        <TransformGroup>
+                                                            <TranslateTransform x:Name="Translate" X="500"/>
+                                                            <ScaleTransform x:Name="ItemScale"/>
+                                                        </TransformGroup>
+                                                    </StackPanel.RenderTransform>
+
+                                                    <!-- Animate item when it is added to the basket -->
+                                                    <StackPanel.Triggers>
+                                                        <EventTrigger RoutedEvent="Loaded">
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+
+                                                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Translate" Storyboard.TargetProperty="X">
+                                                                        <SplineDoubleKeyFrame KeyTime="00:00:00.2" Value="0"/>
+                                                                    </DoubleAnimationUsingKeyFrames>
+
+                                                                    <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="ItemScale" To="1" From="0" Duration="00:00:00.2"/>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)" Storyboard.TargetName="ItemScale" To="1" From="0" Duration="00:00:00.2"/>
+
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger>
+                                                    </StackPanel.Triggers>
+
+                                                    <!-- Grid for the Name, Price and delete button -->
+                                                    <Grid Grid.Row="1">
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="3*"/>
+                                                            <ColumnDefinition Width="1*"/>
+                                                            <ColumnDefinition Width="1*"/>
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextGraySolid}" FontSize="25" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Plantin MT Std" Grid.Column="0" FontWeight="Bold"/>
+
+                                                        <TextBlock FontSize="20"
+                                                               VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                                               Foreground="#2C2C2C" FontWeight="Bold" 
+                                                               Grid.Column="1">
+                                                        <Run Text="{Binding Price, Converter={local:PriceToStringConverter}}"/> <Run Text="kr"/>
+                                                        </TextBlock>
+
+                                                        <Button VerticalAlignment="Center" HorizontalContentAlignment="Right" Grid.Column="2" 
+                                                            Command="{Binding ElementName=LvBasket, Path=DataContext.RemoveProductCommand}"
+                                                            CommandParameter="{Binding BasketID}">
+                                                            <Button.Template>
+                                                                <ControlTemplate>
+                                                                    <Border RenderTransformOrigin="0.5,0.5">
+
+                                                                        <Border.RenderTransform>
+                                                                            <ScaleTransform ScaleX="1" ScaleY="1" x:Name="BtnScale"/>
+                                                                        </Border.RenderTransform>
+
+                                                                        <Border.Triggers>
+
+                                                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                                                <BeginStoryboard>
+                                                                                    <Storyboard>
+                                                                                        <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                                                         Storyboard.TargetName="BtnScale"  
+                                                                                         To="1.5" Duration="00:00:00.1"/>
+                                                                                        <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)" 
+                                                                                         Storyboard.TargetName="BtnScale"  
+                                                                                         To="1.5" Duration="00:00:00.1"/>
+                                                                                    </Storyboard>
+                                                                                </BeginStoryboard>
+                                                                            </EventTrigger>
+                                                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                                                <BeginStoryboard>
+                                                                                    <Storyboard>
+                                                                                        <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)" 
+                                                                                         Storyboard.TargetName="BtnScale"  
+                                                                                         To="1" Duration="00:00:00.1"/>
+                                                                                        <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)" 
+                                                                                         Storyboard.TargetName="BtnScale"  
+                                                                                         To="1" Duration="00:00:00.1"/>
+                                                                                    </Storyboard>
+                                                                                </BeginStoryboard>
+                                                                            </EventTrigger>
+                                                                        </Border.Triggers>
+
+                                                                        <TextBlock Text="X" FontSize="25" 
+                                                                               FontFamily="{StaticResource Manti}" 
+                                                                               FontWeight="Bold" Foreground="{StaticResource DarkRedSolid}"
+                                                                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                                               />
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Button.Template>
+                                                        </Button>
+
+                                                    </Grid>
+
+                                                    <!-- Show ingredients if the item has any, Remove this text if it does not-->
+                                                    <TextBlock Text="{Binding Ingredients, Converter={local:IngredientsToStringConverter}}" 
+                                                           Margin="0,5,0,5" FontSize="15" Grid.Row="2" 
+                                                           TextWrapping="Wrap"
+                                                           FontFamily="{StaticResource Manti}" 
+                                                           Foreground="{StaticResource TextGraySolid}"
+                                                           Visibility="{Binding IsEditable, Converter={local:BoolToVisibilityConverter}}"/>
+
+                                                    <!-- Button to edit the item, remove this button if the item is'nt editable -->
+                                                    <Button Grid.Row="2" Width="90" Height="30" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,5,0,5" 
+                                                            Command="{Binding ElementName=LvBasket, Path=DataContext.EditObjectCommand}" CommandParameter="{Binding BasketID}"
+                                                            Visibility="{Binding IsEditable, Converter={local:BoolToVisibilityConverter}}">
+                                                        <Button.Template>
+                                                            <ControlTemplate>
+                                                                <Border BorderThickness="2" BorderBrush="Black" Background="White" RenderTransformOrigin="0.5,0.5">
+
+                                                                    <Border.RenderTransform>
+                                                                        <ScaleTransform CenterX="1.5" CenterY="1.5" ScaleX="1" ScaleY="1" x:Name="BtnRenderTransform"/>
+                                                                    </Border.RenderTransform>
+
+                                                                    <Border.Triggers>
+
+                                                                        <EventTrigger RoutedEvent="MouseEnter">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <DoubleAnimation Storyboard.TargetName="BtnRenderTransform" 
+                                                                                                 Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                                                                 To="1.1" Duration="00:00:00.1"/>
+                                                                                    <DoubleAnimation Storyboard.TargetName="BtnRenderTransform" 
+                                                                                                 Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+                                                                                                 To="1.1" Duration="00:00:00.1"/>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+                                                                        <EventTrigger RoutedEvent="MouseLeave">
+                                                                            <BeginStoryboard>
+                                                                                <Storyboard>
+                                                                                    <DoubleAnimation Storyboard.TargetName="BtnRenderTransform" 
+                                                                                                 Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                                                                                                 To="1" Duration="00:00:00.1"/>
+                                                                                    <DoubleAnimation Storyboard.TargetName="BtnRenderTransform" 
+                                                                                                 Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+                                                                                                 To="1" Duration="00:00:00.1"/>
+                                                                                </Storyboard>
+                                                                            </BeginStoryboard>
+                                                                        </EventTrigger>
+
+                                                                    </Border.Triggers>
+
+                                                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ändra" FontFamily="{StaticResource Manti}"
+                                                                           x:Name="BtnContent" Foreground="{StaticResource TextGraySolid}" FontSize="15"
+                                                                           />
+                                                                </Border>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                    </Button>
+
+                                                    <!-- Decoration splitter -->
+                                                    <Rectangle Height="2" Fill="{StaticResource SeperatorColorSolid}" VerticalAlignment="Center" Margin="0,20,0,20"/>
+
+                                                </StackPanel>
+
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+
+                            </ListView.ItemContainerStyle>
+
+                        </ListView>
+
+                        <Button Margin="0,0,0,0" VerticalAlignment="Bottom" Command="{Binding PayCommand}" Style="{StaticResource OrderButton}" Content="{Binding OrderPriceString}" Grid.Row="3"/>
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </Grid>
+
+        <Frame Margin="0,0,0,0" Content="{Binding SubPage, Converter={local:TypeToPageConverter}, ConverterParameter=1}" 
+                                Visibility="{Binding Source={x:Static local:ProgramState.IsRunning}, Converter={local:BoolToVisibilityConverter}}"
+               />
+        
+    </Grid>
+</vs:BasePage>

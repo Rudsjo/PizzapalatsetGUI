@@ -1,0 +1,52 @@
+﻿<vs:BasePage x:TypeArguments="vm:PaymentOKViewModel" 
+             x:Class="CustomerTerminalWPF.Views.Pages.Sub_Pages.PaymentOKFrame"
+      
+      xmlns:vm="clr-namespace:CustomerTerminalWPF.ViewModels"
+      xmlns:vs="clr-namespace:CustomerTerminalWPF.Views"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CustomerTerminalWPF"
+      mc:Ignorable="d" 
+      Background="White"
+      d:DesignHeight="750" d:DesignWidth="600"
+      Title="PaymentOKFrame">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height=".5*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Image VerticalAlignment="Center" HorizontalAlignment="Center" Source="/Views/Images/checkmark.png" Width="200" Height="200" Margin="20,50,0,0"/>
+            <Rectangle Fill="White">
+                <Rectangle.RenderTransform>
+                    <ScaleTransform x:Name="RecScale"/>
+                </Rectangle.RenderTransform>
+
+                <Rectangle.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="RecScale" To="0" Duration="00:00:01"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+
+            </Rectangle>
+        </Grid>
+       
+        <TextBlock Grid.Row="1" Text="Din betalning är genomförd" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Width="530" 
+                   TextWrapping="Wrap" FontFamily="{StaticResource Manti}" FontWeight="Bold" Margin="0,30,0,0"
+                   Foreground="{StaticResource TextGraySolid}" TextAlignment="Center"/>
+        <TextBlock Grid.Row="2" Text="Glöm inte kvittot med tillhörande ordernummer" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="40" Width="530" 
+                   TextWrapping="Wrap" FontFamily="{StaticResource Manti}" FontWeight="Bold" 
+                   Foreground="{StaticResource TextGraySolid}" TextAlignment="Center"/>
+    </Grid>
+</vs:BasePage>
