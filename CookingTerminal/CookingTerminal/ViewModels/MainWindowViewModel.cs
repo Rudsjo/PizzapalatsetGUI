@@ -9,7 +9,7 @@ namespace CookingTerminal
         /// <summary>
         /// The property to set the current page of the application
         /// </summary>
-        public Navigator CurrentPage { get; set; } = Navigator.Main;
+        public Navigator CurrentPage { get; set; } = Navigator.Login;
 
         /// <summary>
         /// Static property to access this ViewModel

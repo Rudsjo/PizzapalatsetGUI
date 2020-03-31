@@ -25,7 +25,7 @@ namespace CookingTerminal
             {
                 // Login
                 case Navigator.Login:
-                    return null;
+                    return new LoginPage();
 
                 // Main
                 case Navigator.Main:
