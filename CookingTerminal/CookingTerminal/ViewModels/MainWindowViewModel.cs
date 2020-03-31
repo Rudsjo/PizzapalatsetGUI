@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace CookingTerminal
 {
@@ -49,10 +50,21 @@ namespace CookingTerminal
         {
             // Sets the value of the static property
             VM = this;
+
+            Init();
         }
 
         #endregion
 
+        /// <summary>
+        /// First Init
+        /// </summary>
+        private async void Init()
+        {
+            ConfigFileHelpers.ReadServerConfigFile();
+            if (!await ProgramState.Server.ConnectAsync())
+                MessageBox.Show("Could not connect to the server");
+        }
 
     }
 }

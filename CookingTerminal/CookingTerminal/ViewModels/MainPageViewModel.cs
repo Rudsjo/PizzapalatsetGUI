@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Linq;
+using System.Windows.Threading;
 
 namespace CookingTerminal
 {
@@ -16,6 +13,11 @@ namespace CookingTerminal
     public class MainPageViewModel : BaseViewModel
     {
         #region Public Properties
+
+        public static MainPageViewModel VM { get; set; }
+
+        public Dispatcher ThisDispatcher { get; set; }
+
         /// <summary>
         /// The property used to save the items from database
         /// </summary>
@@ -51,22 +53,12 @@ namespace CookingTerminal
 
         public MainPageViewModel()
         {
-            // Creating the lists
-            OrdersReadyToCook = new ObservableCollection<OrderViewModel>();
-            PrioritizedOrders = new ObservableCollection<OrderViewModel>();
-            OrdersWaiting = new ObservableCollection<OrderViewModel>();
+            // Save an instance of this ViewModel
+            VM = this;
+            // Save an instance of this dispatcher so it can be invoked from other threads
+            ThisDispatcher = Dispatcher.CurrentDispatcher;
 
-            Task.Run(async () =>
-            {
-                // Getting all items from the database
-                DatabaseList = await rep.GetOrderByStatus(0);
-
-                // Setting it to the UI list
-                OrdersReadyToCook = await ViewModelhelpers.FillListFromDatabase<BackendHandler.Order, OrderViewModel>(DatabaseList);
-
-            }).Wait();
-
-            FillWaitingLists();
+            LoadLists();
 
             // Creating the commands
             CookOrder = new RelayCommand((object order) => 
@@ -86,7 +78,7 @@ namespace CookingTerminal
         #endregion
 
 
-        #region Private Methods
+        #region Methods
 
         /// <summary>
         /// Method to fill the waiting lists
@@ -111,8 +103,30 @@ namespace CookingTerminal
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Load all order lists
+        /// </summary>
+        public void LoadLists()
+        {
+            // Creating the lists
+            OrdersReadyToCook = new ObservableCollection<OrderViewModel>();
+            PrioritizedOrders = new ObservableCollection<OrderViewModel>();
+            OrdersWaiting = new ObservableCollection<OrderViewModel>();
 
+            Task.Run(async () =>
+            {
+                // Getting all items from the database
+                DatabaseList = await rep.GetOrderByStatus(0);
+
+                // Setting it to the UI list
+                OrdersReadyToCook = await ViewModelhelpers.FillListFromDatabase<BackendHandler.Order, OrderViewModel>(DatabaseList);
+
+            }).Wait();
+
+            ThisDispatcher.Invoke(FillWaitingLists);
+        }
+
+        #endregion
 
     }
 }
