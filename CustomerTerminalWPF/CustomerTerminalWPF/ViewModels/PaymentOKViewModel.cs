@@ -12,7 +12,10 @@
         {
             // Notify server if connected
             if(ProgramState.ServerConnection.ConnectionState == ConnectionStates.Connected)
+            {
+                DatabaseData.AddOrder(OrderPageViewModel.VM.OrderItems);
                 ProgramState.ServerConnection.SendMessage("[NEWORDER]");
+            }
         }
     }
 }

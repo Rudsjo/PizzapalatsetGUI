@@ -39,6 +39,30 @@
             AllProducts    = new ObservableCollection<OrderItemViewModel> (await GetAllProductsAsync().ToListAsync() );
         }
 
+        public static async void AddOrder(ObservableCollection<OrderItemViewModel> Items)
+        {
+            Order o = new Order();
+            o.PizzaList = new List<Pizza>();
+            o.ExtraList = new List<Extra>();
+            o.Price = 0;
+            foreach(var p in Items.Where(i => i.Type == Enums.Pizza))
+            {
+                var pi = new Pizza { Pizzabase = p.PizzaBase, Price = p.Price, StandardIngredientsDeffinition = p.StandardIngredients.ToList() };
+                pi.PizzaIngredients = new List<Condiment>();
+                foreach(var i in p.Ingredients)
+                    pi.PizzaIngredients.Add(new Condiment { Type = i.Name, Price = i.Price });
+                o.PizzaList.Add(pi);
+                o.Price += pi.Price;
+            }
+            foreach (var e in Items.Where(i => i.Type == Enums.Extra))
+            {
+                o.ExtraList.Add(new Extra { Type = e.Name, Price = e.Price });
+                o.Price += e.Price;
+            }
+
+            await Backend.AddOrder(o);
+        }
+
         /// <summary>
         /// Load all items from the database as an IEnumerable<OrderItemViewModel>
         /// </summary>
