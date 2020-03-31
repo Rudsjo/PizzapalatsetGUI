@@ -32,8 +32,13 @@
                         HorizontalAlignment="Left"
                         Grid.Column="1">
                 <TextBox Text="{Binding UserID, Mode=OneWayToSource}" 
-                         Width="150" Margin="5" Padding="3"
-                         />
+                         Width="150" Margin="5" Padding="3">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <Border BorderBrush="{StaticResource HoverBrush}" />
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
 
                 <PasswordBox x:Name="PasswordText" Tag="Password" Width="150" Margin="5" Padding="3" />
 

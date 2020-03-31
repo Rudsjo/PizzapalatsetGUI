@@ -80,6 +80,7 @@ namespace CookingTerminal
                 // Changes page
                 MainWindowViewModel.VM.CurrentPage = Navigator.Cooking;
             });
+            Logout = new RelayCommand(RunLogout);
         }
 
         #endregion

@@ -33,9 +33,17 @@
                    MaxWidth="80" MaxHeight="80" Margin="10 5"/>
 
             <!-- Log out -->
-            <TextBlock Text="Logga ut"
-                       Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"
-                       Margin="10"/>
+            <StackPanel Orientation="Horizontal" 
+                        Grid.Column="1" 
+                        HorizontalAlignment="Right" 
+                        VerticalAlignment="Center"
+                        Margin="10">
+
+                <Button Content="Logga ut"
+                        Command="{Binding Logout}"
+                        Style="{StaticResource CookingTimer}"/>
+
+            </StackPanel>
         </Grid>
         
         <!-- Main Content -->

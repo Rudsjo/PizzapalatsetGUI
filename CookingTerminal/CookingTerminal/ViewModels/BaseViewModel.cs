@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
 
 namespace CookingTerminal
 {
@@ -37,6 +38,32 @@ namespace CookingTerminal
         public static OrderViewModel OrderToCook { get; set; }
 
         #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to call the logout action in all view models
+        /// </summary>
+        public ICommand Logout { get; set; }
+
+
+        #region Command Methods
+
+        /// <summary>
+        /// Logs out the user and returns to the login page
+        /// </summary>
+        /// <param name="parameter"></param>
+        protected void RunLogout(object parameter)
+        {
+            MainWindowViewModel.VM.CurrentPage = Navigator.Login;
+        }
+
+        #endregion
+
+        #endregion
+
+
+
 
     }
 }

@@ -56,12 +56,18 @@ namespace CookingTerminal
                 // Checking if the login went through
                 if (result.Item1)
                 {
-                    // Changing page
-                    MainWindowViewModel.VM.CurrentPage = Navigator.Main;
+                    // Then checking the credentials through the role
+                    if (result.Item2 == "Admin" || result.Item2 == "Bagare")
+                    {
+                        // Changing page
+                        MainWindowViewModel.VM.CurrentPage = Navigator.Main;
+                    }
+                    else
+                        MessageBox.Show("Du saknar behörighet för denna terminal.");
                 }
 
                 else
-                    MessageBox.Show("Inloggning misslyckades");
+                    MessageBox.Show("Inloggning misslyckades.\nFelaktigt användarnamn eller lösenord.");
         }
 
         #endregion

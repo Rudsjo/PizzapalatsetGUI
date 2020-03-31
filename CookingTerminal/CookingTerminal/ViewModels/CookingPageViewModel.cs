@@ -76,6 +76,7 @@ namespace CookingTerminal
 
             // Creating new commands
             CookFood = new RelayCommand(CookFoodCommand);
+            Logout = new RelayCommand(RunLogout);
 
            }
 
