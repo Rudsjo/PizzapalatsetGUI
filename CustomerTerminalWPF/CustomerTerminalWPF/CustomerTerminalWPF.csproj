@@ -13,6 +13,7 @@
     <None Remove="Views\Images\BG.png" />
     <None Remove="Views\Images\Bild_Saknas.png" />
     <None Remove="Views\Images\checkmark.png" />
+    <None Remove="Views\Images\Hand.png" />
     <None Remove="Views\Images\Logo.png" />
     <None Remove="Views\Images\LogoBig.png" />
     <None Remove="Views\Images\MasterCard.jpg" />
@@ -58,6 +59,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Views\Images\payment.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Views\Images\Hand.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Views\Images\spinner.png">

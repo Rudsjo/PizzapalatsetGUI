@@ -10,66 +10,59 @@
       xmlns:vs="clr-namespace:CustomerTerminalWPF.Views"
       mc:Ignorable="d" 
       d:DesignHeight="1000" d:DesignWidth="1800">
-    <Border BorderThickness="10" BorderBrush="{StaticResource DarkGraySolid}" Background="White">
+    <Border BorderThickness="5" BorderBrush="{StaticResource DarkGraySolid}" Background="White">
         <Grid>
             <Grid.Background>
                 <ImageBrush ImageSource="/Views/Images/BG.png"/>
             </Grid.Background>
             
             <Grid.RowDefinitions>
-                <RowDefinition Height="1.6*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height=".8*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+          
+            <Image Source="pack:\\application:,,,/Views/Images/LogoBig.png" Width="400" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <Image Source="pack:\\application:,,,/Views/Images/LogoBig.png" Width="400" Height="400" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Välkommen in" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource Manti}" 
+                           Foreground="{StaticResource TextGraySolid}" FontSize="100" Margin="0,0,0,0"/>
+                <TextBlock Text="Klicka på skärmen" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource Manti}" 
+                           Foreground="{StaticResource TextGraySolid}" FontSize="60" Margin="0,10,0,0"/>
+                <TextBlock Text="för att påbörja din beställning" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource Manti}" 
+                           Foreground="{StaticResource TextGraySolid}" FontSize="60" Margin="0,10,0,0"/>
+            </StackPanel>
 
-            <Grid Grid.Row="1">
+            <Ellipse Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="200" Height="200" StrokeThickness="2" Stroke="{StaticResource TextGraySolid}" Margin="0,0,200,200"/>
+            <Ellipse Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="180" Height="180" StrokeThickness="2" Stroke="{StaticResource TextGraySolid}" Margin="0,0,210,210" RenderTransformOrigin=".5,.5">
 
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition/>
-                    <RowDefinition Height=".5*"/>
-                </Grid.RowDefinitions>
+                <Ellipse.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" x:Name="Scale"/>
+                </Ellipse.RenderTransform>
 
-                <TextBlock Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="100" FontFamily="Impact" FontWeight="Bold" Margin="0,0,0,0">
-                    <Run Text="BESTÄLL" Foreground="{StaticResource  DarkGraySolid}"/> <Run Text=" &amp;" FontSize="120" Foreground="{StaticResource HoverGraySolid}"/> <Run Text=" BETALA" Foreground="{StaticResource DarkGreenSolid}"/> <Run Text=" HÄR" Foreground="{StaticResource DarkGraySolid}"/>
-                </TextBlock>
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
 
-                <Rectangle Grid.Row="1" Margin="0,0,0,0">
-                    <Rectangle.Fill>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="{StaticResource DarkGray}"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Scale" Duration="00:00:00.5" AutoReverse="True" RepeatBehavior="Forever" To=".7"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)" Storyboard.TargetName="Scale" Duration="00:00:00.5" AutoReverse="True" RepeatBehavior="Forever" To=".7"/>
+                            </Storyboard>
+                            
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+                
+            </Ellipse>
+            <Image Grid.Row="1" Source="/Views/Images/Hand.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="400"/>
 
-                <TextBlock Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="70" FontFamily="Impact" FontWeight="Bold" Margin="0,0,0,0">
-                    <Run Text="A$$" Foreground="{StaticResource DarkGreenSolid}"/><Run Text="  CASH" Foreground="{StaticResource DarkGraySolid}"/><Run Text="  OR" Foreground="{StaticResource HoverGraySolid}" FontSize="35"/> <Run Text="  CARD" Foreground="{StaticResource DarkGreenSolid}"/>
-                </TextBlock>
-
-                <Border Grid.Row="3" BorderThickness="1">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <Image Source="/Views/Images/Visa.png"       Height="50" Margin="75,0,75,0" VerticalAlignment="Top"/>
-                        <Image Source="/Views/Images/MasterCard.jpg" Height="50" Margin="75,0,75,0" VerticalAlignment="Top"/>
-                        <Image Source="/Views/Images/Amex.jpg"       Height="50" Margin="75,0,75,0" VerticalAlignment="Top"/>
-                    </StackPanel>
-                </Border>
-
-            </Grid>
-
-            <Grid Grid.Row="2">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Button Width="500" Height="125" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="20" Style="{StaticResource StartOrderButton}" Content="ÄT HÄR" Command="{Binding BeginOrderCommand}"/>
-                <Button Width="500" Height="125" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="20" Style="{StaticResource StartOrderButton}" Content="TA MED" Command="{Binding BeginOrderCommand}"/>
-            </Grid>
+            <Button Grid.RowSpan="2" 
+                    VerticalAlignment="Top" HorizontalAlignment="Right" 
+                    BorderThickness="0" Background="Transparent"
+                    Command="{Binding BeginOrderCommand}" 
+                    Width="1800" Height="1000" Opacity="0"/>
 
         </Grid>
     </Border>
