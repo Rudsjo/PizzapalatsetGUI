@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Timers;
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace CookingTerminal
 {
@@ -16,12 +18,12 @@ namespace CookingTerminal
         /// <summary>
         /// The height of the popup window
         /// </summary>
-        public int Height { get; set; } = (MainWindowViewModel.VM.CurrentHeight / 2);
+        public int Height { get; set; } = (MainWindowViewModel.VM.CurrentHeight / 4);
 
         /// <summary>
         /// The width of the popup window
         /// </summary>
-        public int Width { get; set; } = (MainWindowViewModel.VM.CurrentWidth / 2);
+        public int Width { get; set; } = (MainWindowViewModel.VM.CurrentWidth / 4);
 
         #endregion
 
@@ -30,43 +32,47 @@ namespace CookingTerminal
         /// <summary>
         /// The message to show in the window
         /// </summary>
-        public string Message { get; set; } = "Är du säker på att du vill ta bort ordern?";
+        public string Message { get; set; } = "Ordern serverad";
 
         /// <summary>
-        /// Content of the confirm button
+        /// Timer of how long the popup window should be open
         /// </summary>
-        public string ConfirmButtonContent { get; set; } = "Ja";
+        public DispatcherTimer WindowTimer { get; set; }
 
         /// <summary>
-        /// Content of the decline button
+        /// The amount of seconds the window should be shown
         /// </summary>
-        public string DeclineButtonContent { get; set; } = "Nej";
-
-        /// <summary>
-        /// The command to run if user presses confirm
-        /// </summary>
-        public ICommand Confirm { get; set; }
-
-        /// <summary>
-        /// The command to run if the user presses no
-        /// </summary>
-        public ICommand Decline { get; set; }
+        public int ShowingTime { get; set; } = 1;
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public ConfirmationWindowViewModel()
         {
-
-            // Creating commands
-            Confirm = new RelayCommand((o) => { });
-
-            Decline = new RelayCommand((o) => { });
+            // Starting the timer and closing it when the set time has expired
+            WindowTimer = new DispatcherTimer();
+            WindowTimer.Interval = new TimeSpan(0, 0, ShowingTime);
+            WindowTimer.Start();
+            WindowTimer.Tick += WindowTimer_Tick;
         }
 
+        /// <summary>
+        /// Event to close the window when the timer has elapsed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void WindowTimer_Tick(object sender, EventArgs e)
+        {
+            // Returns that the window was closed correctly and stops the timer
+            CookingPageViewModel.VM.confirmationWindow.DialogResult = true;
+            WindowTimer.Stop();
+        }
+
+
         #endregion
-
-
     }
 }

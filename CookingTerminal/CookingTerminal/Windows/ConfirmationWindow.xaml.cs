@@ -21,7 +21,18 @@ namespace CookingTerminal
         {
             InitializeComponent();
 
+            // Setting the DataContext
             this.DataContext = new ConfirmationWindowViewModel();
+
+            // Setting the Owner window
+            this.Owner = Window.GetWindow(MainWindow.Instance);
+
+            // Sets the startup location to center of the parent window
+            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            this.Top = ((Window.GetWindow(MainWindow.Instance).ActualHeight / 2) - this.ActualHeight);
+            this.Left = ((Window.GetWindow(MainWindow.Instance).ActualWidth / 2) - this.ActualWidth);
+
+            this.WindowStyle = WindowStyle.None;
         }
     }
 }

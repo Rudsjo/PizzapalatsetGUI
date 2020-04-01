@@ -10,6 +10,7 @@
     <None Remove="Fonts\fontawesome-webfont.ttf" />
     <None Remove="Fonts\Montserrat-Bold.ttf" />
     <None Remove="Fonts\Montserrat-Regular.ttf" />
+    <None Remove="Images\checkmark.png" />
     <None Remove="Images\LogoBackground.png" />
     <None Remove="Images\PP-Logo-small.png" />
     <None Remove="Images\PP-Logo.png" />
@@ -31,6 +32,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Fonts\Montserrat-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\checkmark.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\LogoBackground.png">

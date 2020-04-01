@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BackendHandler;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +14,15 @@ namespace CookingTerminal
 {
     public class CookingPageViewModel : BaseViewModel
     {
+
+        #region Singleton
+
+        /// <summary>
+        /// Singleton of this viewmodel
+        /// </summary>
+        public static CookingPageViewModel VM { get; set; }
+
+        #endregion
 
         #region Private Members
         /// <summary>
@@ -40,6 +50,11 @@ namespace CookingTerminal
         /// </summary>
         public bool ServeButtonVisibility { get; set; } = false;
 
+        /// <summary>
+        /// Instance of the a Confirmation window
+        /// </summary>
+        public ConfirmationWindow confirmationWindow { get; set; }
+
         #endregion
 
         #region Commands
@@ -60,6 +75,8 @@ namespace CookingTerminal
         #region Constructor
         public CookingPageViewModel()
         {
+            // Setting singleton
+            VM = this;
 
             // Getting the chosen order from the static reference
             _orderToCook = OrderToCook;
@@ -71,13 +88,10 @@ namespace CookingTerminal
             // Gets all pizzas from the chosen order
             Task.Run(async () => await GetFoodsFromOrder()).Wait();
 
-            // Updates the lists
-            //UpdateCookingList();
-
             // Creating new commands
             CookFood = new RelayCommand(CookFoodCommand);
             Logout = new RelayCommand(RunLogout);
-            MarkOrderAsServed = new RelayCommand((o) => { });
+            MarkOrderAsServed = new RelayCommand(MarkOrderAsServedCommand);
 
            }
 
@@ -157,6 +171,43 @@ namespace CookingTerminal
                         UpdateCookingList(CookedPizza);
                         return;
                     }
+            }
+        }
+
+        /// <summary>
+        /// Command to update the status of an Order in the databse and open a Confirmation Window to the user
+        /// </summary>
+        /// <param name="o"></param>
+        public async void MarkOrderAsServedCommand(object o)
+        {
+            // Sets up a new confirmation window
+            confirmationWindow = new ConfirmationWindow();
+
+            // Opens the confirmation and waits to see if the dialog is closed correctly
+            Nullable<bool> result = confirmationWindow.ShowDialog();
+
+            // If the window is closed in any other way than it's meant to, 
+            // no more actions will take place
+            if (result == false)
+                return;
+
+            // If everything goes according to plan...
+            else
+            {
+                // Converting the order to a modeltype
+                var OrderToServe = new Order()
+                {
+                    OrderID = _orderToCook.OrderID,
+                    ExtraList = _orderToCook.ExtraList,
+                    PizzaList = _orderToCook.PizzaList,
+                    Price = _orderToCook.Price,
+                    Status = _orderToCook.Status
+                };
+
+                // Updates the status in the database
+                await rep.UpdateOrderStatusWhenOrderIsCooked(OrderToServe);
+
+                MainWindowViewModel.VM.CurrentPage = Navigator.Main;
             }
         }
 

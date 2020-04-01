@@ -24,7 +24,11 @@ namespace CookingTerminal
         {
             InitializeComponent();
 
+            Instance = this;
+
             this.DataContext = new MainWindowViewModel();
         }
+
+        public static MainWindow Instance { get; set; }
     }
 }

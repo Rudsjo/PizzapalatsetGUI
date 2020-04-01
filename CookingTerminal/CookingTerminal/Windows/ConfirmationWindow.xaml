@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:CookingTerminal"
         mc:Ignorable="d"
         Title="ConfirmationWindow"
-        Height="{Binding Height}"
-        Width="{Binding Width}">
+        MinHeight="{Binding Height}" MaxHeight="{Binding Height}"
+        MinWidth="{Binding Width}" MaxWidth="{Binding Width}"
+        >
     <Grid>
         
         <!-- Background -->
@@ -17,35 +18,23 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <!-- Text -->
+            <!-- Image -->
             <RowDefinition Height="Auto" />
-            <!-- Buttons -->
+            <!-- Text -->
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
+        <!-- Image -->
+        <Image Grid.Row="1" Source="/Images/checkmark.png"
+               HorizontalAlignment="Center" MaxHeight="100" MaxWidth="100"/>
+
         <!-- Text -->
-        <TextBlock Grid.Row="1" Text="{Binding Message}"
+        <TextBlock Grid.Row="2" Text="{Binding Message}"
+                   FontSize="{StaticResource FontSizeLarge}"
+                   Margin="10"
                    HorizontalAlignment="Center"/>
-        
-        <!-- Buttons -->
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <!-- Button 1-->
-                <ColumnDefinition Width="*" />
-                <!-- Button 2-->
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <!-- Confirm Button -->
-            <Button Grid.Column="0" Content="{Binding ConfirmButtonContent}"
-                    Command="{Binding Confirm}" Style="{StaticResource GreenActionButton}"/>
-
-            <!-- Decline Button -->
-            <Button Grid.Column="1" Content="{Binding DeclineButtonContent}"
-                    Command="{Binding Decline}" Style="{StaticResource RedActionButton}" />
-        </Grid>
-
+       
 
     </Grid>
 </Window>
