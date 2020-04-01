@@ -210,6 +210,11 @@
                     ResolveServerMessage(ReceivedBytes);
                 }
 
+                // Start receiving packets from the server again
+                Connection.BeginReceive(Buffer, 0, Buffer.Length,
+                    SocketFlags.None,
+                    new AsyncCallback(ReceiveCallback),
+                    s);
             }
             catch { }
         }
