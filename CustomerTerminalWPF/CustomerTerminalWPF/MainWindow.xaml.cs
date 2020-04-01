@@ -16,7 +16,7 @@
             InitializeComponent();
 
             // Set the datacontext of this window
-            this.DataContext = new ViewModels.MainWindowViewModel(this);
+            this.DataContext = new ViewModels.MainWindowViewModel();
         }
     }
 }

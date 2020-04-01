@@ -68,7 +68,7 @@
                      * that display prices can be changed without effecting the source
                      */
                     Ingredients = new ObservableCollection<OrderItemViewModel>();
-                    DatabaseData.AllIngredients.ToList().Where(i => i.Type == Enums.PizzaIngredient).ToList().ForEach(i => { Ingredients.Add(i.Copy()); });
+                    DatabaseHelpers.AllIngredients.ToList().Where(i => i.Type == Enums.PizzaIngredient).ToList().ForEach(i => { Ingredients.Add(i.Copy()); });
                     break;
 
                 // Should never go here
@@ -136,8 +136,8 @@
                 OrderItemViewModel Ing = Ingredients[index];
                 if (CurrentItem.StandardIngredients.Contains(Ing.ProductID))
                     Ingredients[index].Price = (CurrentItem.StandardIngredients.Where(i => i.Equals(Ing.ProductID)).Count() > CurrentItem.Ingredients.Where(i => i.ProductID.Equals(Ing.ProductID)).Count())
-                    ? 0 : DatabaseData.AllIngredients.First(i => i.Type == Ing.Type && i.ProductID == Ing.ProductID).Price;
-                else Ingredients[index].Price = DatabaseData.AllIngredients.First(i => i.Type == Ing.Type && i.ProductID == Ing.ProductID).Price;
+                    ? 0 : DatabaseHelpers.AllIngredients.First(i => i.Type == Ing.Type && i.ProductID == Ing.ProductID).Price;
+                else Ingredients[index].Price = DatabaseHelpers.AllIngredients.First(i => i.Type == Ing.Type && i.ProductID == Ing.ProductID).Price;
             }
         }
 

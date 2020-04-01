@@ -13,7 +13,7 @@
             // Notify server if connected
             if(ProgramState.ServerConnection.ConnectionState == ConnectionStates.Connected)
             {
-                DatabaseData.AddOrder(OrderPageViewModel.VM.OrderItems);
+                DatabaseHelpers.CreateOrder(OrderPageViewModel.VM.OrderItems);
                 ProgramState.ServerConnection.SendMessage("[NEWORDER]");
             }
             OrderPageViewModel.VM.SubPage = OrderSubPages.None;

@@ -1,5 +1,7 @@
 ﻿namespace CustomerTerminalWPF.ViewModels
 {
+    using System.Threading.Tasks;
+
     /// <summary>
     /// All of the required namespaces
     /// </summary>
@@ -16,11 +18,6 @@
         #region Properties
 
         /// <summary>
-        /// Single instance of this window
-        /// </summary>
-        public static Window ThisWindow { get; private set; }
-
-        /// <summary>
         /// The current screen
         /// </summary>
         public MainPages CurrentScreen { get; set; }
@@ -35,24 +32,15 @@
         /// <summary>
         /// Default constructor
         /// </summary>
-        public MainWindowViewModel(Window window)
+        public MainWindowViewModel()
         {
             Init();
-
-            // Set this window
-            ThisWindow = window;
-
-            // Set the current screen
-            CurrentScreen = MainPages.WellcomeScreen;
-
-            // Set this VM
-            VM = this;
         }
 
         /// <summary>
         /// First init
         /// </summary>
-        private async void Init()
+        private void Init()
         {
             // Set rpogramstate to running
             ProgramState.IsRunning = true;
@@ -61,18 +49,20 @@
             ConfigFileHelpers.ReadServerConfigFile();
 
             // Try to connect to the server
-            if ( ! await ProgramState.ServerConnection.ConnectAsync() )
-                // MessageBox is against MVVM, this is just temp
-                MessageBox.Show("Ansultningen till serverns misslyckades, terminalen\nkommer köras i offline läge", "Varning",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Exclamation
-                    );
+            Task.Run(async () => 
+            {
+                await ProgramState.ServerConnection.ConnectAsync();
+                await DatabaseHelpers.Init();
+            });
 
-            /* Load items from database
-             * Procedure can fail so check
-             * the list before exiting
-             */
-            while(DatabaseData.AllProducts == null) await DatabaseData.Init();
+            // Set the current screen
+            CurrentScreen = MainPages.WellcomeScreen;
+
+            // The await does not work for some f****** reason!
+            while (DatabaseHelpers.AllProducts == null) ;
+
+            // Set this VM
+            VM = this;
         }
     }
 }

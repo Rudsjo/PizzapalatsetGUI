@@ -8,7 +8,7 @@
     using System.Linq;
     using System.Collections.ObjectModel;
     using CustomerTerminalWPF.ViewModels.Commands;
-    using System.ComponentModel;
+    using System.Windows.Threading;
     #endregion
 
     /// <summary>
@@ -22,6 +22,10 @@
         /// Single instance of this ViewModel
         /// </summary>
         public static OrderPageViewModel VM       { get; set; }
+        /// <summary>
+        /// Instance of this dispatcher
+        /// </summary>
+        public Dispatcher ThisDispatcher          { get; set; }
 
         /// <summary>
         /// Command for the category buttons
@@ -127,13 +131,16 @@
             // Set VM to this
             VM = this;
 
+            // Get the current dispatcher
+            this.ThisDispatcher = Dispatcher.CurrentDispatcher;
+
             // Skip if the list is empy
-            if (DatabaseData.AllProducts != null)
+            if (DatabaseHelpers.AllProducts != null)
             {
                 // Load products from the Database class
                 PagedProducts = new ObservableCollection<OrderItemViewModel>(
-                                                                             DatabaseData.AllProducts.Where(
-                                                                             p => p.Type == CurrentMenu));
+                                                                              DatabaseHelpers.AllProducts.Where(
+                                                                              p => p.Type == CurrentMenu));
             }
             else throw new Exception("List is null");
 
@@ -209,7 +216,7 @@
                 CurrentMenu   = res;
                 // Get all of the products from the database that is the correct type
                 PagedProducts = new ObservableCollection<OrderItemViewModel>(
-                                                                             DatabaseData.AllProducts.Where(
+                                                                             DatabaseHelpers.AllProducts.Where(
                                                                              p => p.Type == res));
             }
         }
