@@ -11,6 +11,7 @@
     public class CashierViewModel : LoginViewModel
     {
         #region Properties
+        public static CashierViewModel Instance { get; set; } 
 
         private OrderModel _currentOrder;
         public OrderModel CurrentOrder
@@ -64,6 +65,7 @@
         #region Constructor to Get all orders, CurrentOrder and UpdateRelayCommand
         public CashierViewModel()
         {
+            Instance = this;
             GetAllOrders();
             CurrentOrder = new OrderModel();
             UpdateRelayCommand = new RelayCommand(Update, CanUpdate);
@@ -80,6 +82,8 @@
             orderToUpdate.OrderID = CurrentOrder.OrderID;
             await rep.UpdateOrderStatusWhenOrderIsServed(employeeLoggedIn, orderToUpdate);
             await GetAllOrders();
+
+            ProgramState.ServerConnection.SendMessage("[ORDERDONE]");
         }
 
         #region Predicate

@@ -96,7 +96,7 @@
         #endregion
 
         #region Connects to database
-        public static IDatabase rep { get; set; } = Helpers.GetSelectedBackend();
+        public IDatabase rep { get; set; } = Helpers.GetSelectedBackend();
         #endregion
 
         #region PropertyChanged

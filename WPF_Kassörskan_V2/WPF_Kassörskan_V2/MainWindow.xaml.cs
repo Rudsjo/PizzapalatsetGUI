@@ -23,6 +23,24 @@ namespace WPF_Kassörskan_V2
         public MainWindow()
         {
             InitializeComponent();
+            Init();
+        }
+
+        public async void Init()
+        {
+            ProgramState.IsRunning = true;
+
+            ConfigFileHelpers.ReadServerConfigFile();
+
+            if (await ProgramState.ServerConnection.ConnectAsync())
+                MessageBox.Show("Terminal is connected to the server");
+            
+            else
+                MessageBox.Show("Could not connect to the server, RUNNING IN OFFLINE MODE");
+
+
+
+
         }
     }
 }
