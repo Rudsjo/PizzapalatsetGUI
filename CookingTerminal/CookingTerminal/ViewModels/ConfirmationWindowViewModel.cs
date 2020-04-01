@@ -32,7 +32,7 @@ namespace CookingTerminal
         /// <summary>
         /// The message to show in the window
         /// </summary>
-        public string Message { get; set; } = "Ordern serverad";
+        public string Message { get; set; } = "Ordern skickad för servering";
 
         /// <summary>
         /// Timer of how long the popup window should be open
