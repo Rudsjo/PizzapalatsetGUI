@@ -39,6 +39,10 @@ namespace CookingTerminal
         /// </summary>
         public static int MinWindowWidth { get; set; } = (MinWindowHeight * 2);
 
+        public int CurrentHeight { get; set; } = MaxWindowHeight;
+
+        public int CurrentWidth { get; set; } = MaxWindowWidth;
+
         #endregion
 
         #region Constructor
@@ -63,7 +67,7 @@ namespace CookingTerminal
         {
             ConfigFileHelpers.ReadServerConfigFile();
             if (!await ProgramState.Server.ConnectAsync())
-                MessageBox.Show("Could not connect to the server");
+                MessageBox.Show("Kunde inte etablera anslutning till servern.\nProgrammet körs i offline-läge.");
         }
 
     }

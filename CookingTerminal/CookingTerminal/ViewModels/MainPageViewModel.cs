@@ -14,8 +14,14 @@ namespace CookingTerminal
     {
         #region Public Properties
 
+        /// <summary>
+        /// Singleton of this class
+        /// </summary>
         public static MainPageViewModel VM { get; set; }
 
+        /// <summary>
+        /// Instance of a dispatcher thread to be invoked from other threads
+        /// </summary>
         public Dispatcher ThisDispatcher { get; set; }
 
         /// <summary>
@@ -76,7 +82,6 @@ namespace CookingTerminal
         }
 
         #endregion
-
 
         #region Methods
 

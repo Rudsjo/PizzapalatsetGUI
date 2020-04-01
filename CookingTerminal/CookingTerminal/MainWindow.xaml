@@ -10,7 +10,10 @@
         MaxHeight="{Binding MaxWindowHeight}" 
         MaxWidth="{Binding MaxWindowWidth}"
         MinHeight="{Binding MinWindowHeight}"
-        MinWidth="{Binding MinWindowWidth}">
+        MinWidth="{Binding MinWindowWidth}"
+        Height="{Binding CurrentHeight}"
+        Width="{Binding CurrentWidth}"
+        >
     <Grid>
 
         <Grid.Background>
