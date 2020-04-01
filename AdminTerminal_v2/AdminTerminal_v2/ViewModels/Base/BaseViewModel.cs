@@ -24,6 +24,7 @@ namespace AdminTerminal_v2
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged = (sender, e) => { };
 
+
         #region Private Members
         /// <summary>
         /// The property used to save the items from database
@@ -228,9 +229,20 @@ namespace AdminTerminal_v2
         /// </summary>
         public List<BackendHandler.Extra> CurrentOrderExtraList { get; set; }
 
+        /// <summary>
+        /// Static instance of the ingredient window
+        /// </summary>
         public static IngredientWindow IngredientPopupWindow { get; set; }
 
-        public static BackendHandler.Pizza PizzaToAdd { get; set; }
+        /// <summary>
+        /// Instance of the pizza to add
+        /// </summary>
+        public static Pizza PizzaToAdd { get; set; }
+
+        /// <summary>
+        /// The window to pop up if the user tries to delete an item
+        /// </summary>
+        public static WarningOnDeleteWindow deleteWindow { get; set; }
 
         #endregion
 
@@ -488,54 +500,88 @@ namespace AdminTerminal_v2
         public async Task DeleteCommand()
         {
             CurrentID = "";
+            deleteWindow = new WarningOnDeleteWindow();
 
             switch (MainWindowViewModel.VM.CurrentPage)
             {
                 case Navigator.Employees:
                     {
-                        var EmployeeToDelete = GetSelectedItemAsModelType<BackendHandler.Employee, EmployeeViewModel>(Employee);
+                        Nullable<bool> result = deleteWindow.ShowDialog();
 
-                        await rep.DeleteEmployee(EmployeeToDelete);
+                        if (result == false)
+                            return;
 
-                        await UpdateList();
-                        return;
+                        else
+                        {
+                            var EmployeeToDelete = GetSelectedItemAsModelType<BackendHandler.Employee, EmployeeViewModel>(Employee);
+                            await rep.DeleteEmployee(EmployeeToDelete);
+                            await UpdateList();
+                            return;
+                        }
                     }
 
                 case Navigator.Condiments:
                     {
-                        var CondimentToDelete = GetSelectedItemAsModelType<BackendHandler.Condiment, CondimentViewModel>(Condiment);
+                        Nullable<bool> result = deleteWindow.ShowDialog();
 
-                        await rep.DeleteCondiment(CondimentToDelete);
+                        if (result == false)
+                            return;
 
-                        await UpdateList();
-                        return;
+                        else
+                        {
+                            var CondimentToDelete = GetSelectedItemAsModelType<BackendHandler.Condiment, CondimentViewModel>(Condiment);
+                            await rep.DeleteCondiment(CondimentToDelete);
+                            await UpdateList();
+                            return;
+                        }
                     }
 
                 case Navigator.Extras:
                     {
-                        var ExtraToDelete = GetSelectedItemAsModelType<BackendHandler.Extra, ExtraViewModel>(Extra);
+                        Nullable<bool> result = deleteWindow.ShowDialog();
 
-                        await rep.DeleteExtra(ExtraToDelete);
-                        await UpdateList();
-                        return;
+                        if (result == false)
+                            return;
+
+                        else
+                        {
+                            var ExtraToDelete = GetSelectedItemAsModelType<BackendHandler.Extra, ExtraViewModel>(Extra);
+                            await rep.DeleteExtra(ExtraToDelete);
+                            await UpdateList();
+                            return;
+                        }
                     }
 
                 case Navigator.Pizzas:
                     {
-                        var PizzaToDelete = GetSelectedItemAsModelType<BackendHandler.Pizza, PizzaViewModel>(Pizza);
+                        Nullable<bool> result = deleteWindow.ShowDialog();
 
-                        await rep.DeletePizza(PizzaToDelete);
-                        await UpdateList();
-                        return;
+                        if (result == false)
+                            return;
+
+                        else
+                        {
+                            var PizzaToDelete = GetSelectedItemAsModelType<BackendHandler.Pizza, PizzaViewModel>(Pizza);
+                            await rep.DeletePizza(PizzaToDelete);
+                            await UpdateList();
+                            return;
+                        }
                     }
 
                 case Navigator.OldOrders:
                     {
-                        var OldOrderToDelete = await rep.GetSingleOrder(oldOrder.OrderID);
+                        Nullable<bool> result = deleteWindow.ShowDialog();
 
-                        await rep.DeleteOldOrder(OldOrderToDelete);
-                        await UpdateList();
-                        return;
+                        if (result == false)
+                            return;
+
+                        else
+                        {
+                            var OldOrderToDelete = await rep.GetSingleOrder(oldOrder.OrderID);
+                            await rep.DeleteOldOrder(OldOrderToDelete);
+                            await UpdateList();
+                            return;
+                        }
                     }
 
             }

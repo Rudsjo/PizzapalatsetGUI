@@ -8,7 +8,8 @@
         WindowStartupLocation="CenterScreen"
         Title="AdminTerminal" 
         MaxHeight="{Binding MaxWindowHeight}" MaxWidth="{Binding MaxWindowWidth}"
-        MinHeight="{Binding MinWindowHeight}" MinWidth="{Binding MinWindowWidth}">
+        MinHeight="{Binding MinWindowHeight}" MinWidth="{Binding MinWindowWidth}"
+        Height="{Binding MaxWindowHeight}" Width="{Binding MaxWindowWidth}">
     <Grid>
         <!-- Standard Background image -->
         <Grid.Background>

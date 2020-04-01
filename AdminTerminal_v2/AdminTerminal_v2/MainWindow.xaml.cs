@@ -24,7 +24,14 @@ namespace AdminTerminal_v2
         {
             InitializeComponent();
 
+            Instance = this;
+
             this.DataContext = new MainWindowViewModel();
         }
+
+        /// <summary>
+        /// Singleton of this Window
+        /// </summary>
+        public static MainWindow Instance { get; set; }
     }
 }
