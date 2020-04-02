@@ -1,8 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    <FontFamily x:Key="Manti">pack:\\application:,,,/Fonts/# Manti Sans Demo</FontFamily>
-
-    <FontFamily x:Key="Bardon">pack:\\application:,,,/Fonts/# Bardon Rounded Demo</FontFamily>
-
-</ResourceDictionary>
