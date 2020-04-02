@@ -43,7 +43,7 @@
         /// Saves an order to the database
         /// </summary>
         /// <param name="Items">Collection of all the order items</param>
-        public static void CreateOrder(ObservableCollection<OrderItemViewModel> Items)
+        public static async Task<int> CreateOrder(ObservableCollection<OrderItemViewModel> Items)
         {
             // Crate an empty order model
             Order _order = new Order()
@@ -60,11 +60,11 @@
             foreach (var p in Items.Where(i => i.Type == Enums.Pizza))
             {
                 // Create the pizza model
-                var pi = new Pizza { Type      = p.Name      ,
-                                     Pizzabase = p.PizzaBase ,
-                                     Price     = p.Price     ,
-                                     StandardIngredientsDeffinition = p.StandardIngredients.ToList(),
-                                     PizzaIngredients               = new List<Condiment>() };
+                var pi = new Pizza { Type = p.Name,
+                    Pizzabase = p.PizzaBase,
+                    Price = p.Price,
+                    StandardIngredientsDeffinition = p.StandardIngredients.ToList(),
+                    PizzaIngredients = new List<Condiment>() };
 
                 // Add all ingredients to the pizza model
                 foreach (var i in p.Ingredients) pi.PizzaIngredients.Add(new Condiment { Type = i.Name, Price = i.Price });
@@ -81,8 +81,9 @@
                 _order.Price += e.Price;
             }
 
-            // Save the order to the database
-            Task.Run(async () => await Backend.AddOrder(_order));
+            // Wait until the order has been saved to the datase and
+            // return the received order ID
+            return (await Backend.AddOrder(_order));
         }
 
         /// <summary>
@@ -92,7 +93,7 @@
         private static async
             IAsyncEnumerable<OrderItemViewModel> GetAllProductsAsync() {
 
-            // Produt index
+            // Product index
             int index = 0;
 
             /// <summary>
