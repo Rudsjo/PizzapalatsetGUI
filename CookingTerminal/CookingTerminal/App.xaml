@@ -6,9 +6,6 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-
-            <!-- Icons -->
-            <System:String x:Key="LogoutIcon">&#xf359;</System:String>
             
             <!-- Styles -->
             <ResourceDictionary.MergedDictionaries>

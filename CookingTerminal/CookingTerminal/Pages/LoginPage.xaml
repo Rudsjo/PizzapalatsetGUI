@@ -44,7 +44,8 @@
 
                 <!-- Login button -->
                 <Button Content="Logga in"
-                        Style="{StaticResource GreenActionButton}"
+                        local:IsBusyProperty.Value="{Binding LoginIsRunning}"
+                        Style="{StaticResource LoginButton}"
                         Command="{Binding Login}"
                         CommandParameter="{Binding ElementName=Page}" />
             </StackPanel>

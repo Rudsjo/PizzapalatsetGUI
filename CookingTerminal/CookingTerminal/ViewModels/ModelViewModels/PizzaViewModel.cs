@@ -39,7 +39,7 @@ namespace CookingTerminal
         /// <summary>
         /// The time it takes for a pizza to get ready in the oven
         /// </summary>
-        public int CookingTime { get; set; } = 1;
+        public int CookingTime { get; set; } = 3;
 
         /// <summary>
         /// The index of the pizza in the list of orders to be cooked

@@ -6,17 +6,25 @@ using System.Windows;
 
 namespace CookingTerminal
 {
+    /// <summary>
+    /// Converter that takes a boolean and returns a Visibility
+    /// </summary>
     public class BooleanToVisibilityConverter : BaseValueConverter<BooleanToVisibilityConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var boolVal = (bool)value;
+            // Checking for parameters
+            if (parameter == null)
+                // If no parameters are sent in, true will return visible
+                return (bool)value ? Visibility.Visible : Visibility.Hidden;
 
-            if (boolVal == true)
-                return Visibility.Visible;
+            else if ((string)parameter == "PreSpinner")
+                // In case it's a button with a spinner, normal text will be shown before spinner
+                return (bool)value ? Visibility.Hidden : Visibility.Visible;
 
             else
-                return Visibility.Hidden;
+                // If any other parameter is sent in, true vill return hidden
+                return (bool)value ? Visibility.Visible : Visibility.Hidden;               
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

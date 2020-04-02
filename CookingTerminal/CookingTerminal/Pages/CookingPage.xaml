@@ -41,7 +41,7 @@
 
                 <Button Content="Logga ut"
                         Command="{Binding Logout}"
-                        Style="{StaticResource CookingTimer}"/>
+                        Style="{StaticResource LogoutButton}"/>
 
             </StackPanel>
         </Grid>

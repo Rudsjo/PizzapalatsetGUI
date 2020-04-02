@@ -6,7 +6,9 @@
     <FontFamily x:Key="MontserratRegular">pack://application:,,,/Fonts/#Montserrat</FontFamily>
     <FontFamily x:Key="MontserratBold">pack://application:,,,/Fonts/#Montserrat Bold</FontFamily>
     <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/#FontAwesome</FontFamily>
-    
+    <FontFamily x:Key="FontAwesomeBrands">pack://application:,,,/Fonts/#Font Awesome 5 Brands Regular</FontFamily>
+    <FontFamily x:Key="FontAwesomeSolid">pack://application:,,,/Fonts/#Font Awesome 5 Free Solid</FontFamily>
+
     <!-- Base font -->
     <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
         <Setter Property="FontFamily" Value="{StaticResource MontserratRegular}" />
