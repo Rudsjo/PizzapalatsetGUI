@@ -221,6 +221,31 @@
                             }
                         });
                     }
+
+                    if (Message.Equals("[ORDERBAKED]"))
+                    {
+                        Program.PrintMessage(true, $"[{Client.RemoteEndPoint}]:[{_terminal.TerminalType}] marked an order as baked", ConsoleColor.White);
+
+                        // Notify terminals
+                        ActiveTerminals.Where(c => c.TerminalType.Equals(Terminals.CashierTerminal) || c.TerminalType.Equals(Terminals.InfoTerminal)).ToList().ForEach(t =>
+                        {
+                            // Try to send notifying message
+                            if (t.SendData("[ORDERBAKED]"))
+                            {
+                                // Show what terminal was notified
+                                Program.PrintMessage(false, $"Notifying -> [{t.Connection.RemoteEndPoint}]:[{t.TerminalType}]", ConsoleColor.Green);
+                            }
+                            else
+                            {
+
+                                // The terminal has disconnected so remove it and display message
+
+                                Program.PrintMessage(false, $"[{t.Connection.RemoteEndPoint}] -> Not active", ConsoleColor.DarkRed);
+                                t.Close();
+                                ActiveTerminals.Remove(t);
+                            }
+                        });
+                    }
                     if (Message.Equals("[ORDERDONE]"))
                     {
                         Program.PrintMessage(true, $"An order was served from [{Client.RemoteEndPoint}]:[{_terminal.TerminalType}]", ConsoleColor.White);
