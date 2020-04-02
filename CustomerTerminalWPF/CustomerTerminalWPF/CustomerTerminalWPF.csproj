@@ -78,7 +78,7 @@
 
   <ItemGroup>
     <Reference Include="BackendHandler">
-      <HintPath>..\..\..\..\DatabasePizza-master\BackendHandler\bin\Debug\netcoreapp3.1\BackendHandler.dll</HintPath>
+      <HintPath>..\..\..\..\..\source\repos\PizzapalatsetGrupp5\Administrator\DatabasePizza\BackendHandler\bin\Debug\netcoreapp3.1\BackendHandler.dll</HintPath>
     </Reference>
   </ItemGroup>
 
