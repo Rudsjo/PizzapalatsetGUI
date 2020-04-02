@@ -42,7 +42,7 @@ namespace CookingTerminal
         /// <summary>
         /// The amount of seconds the window should be shown
         /// </summary>
-        public int ShowingTime { get; set; } = 1;
+        public int ShowingTime { get; set; } = 3;
 
         #endregion
 

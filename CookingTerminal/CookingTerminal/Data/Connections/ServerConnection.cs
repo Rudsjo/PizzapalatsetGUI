@@ -154,7 +154,9 @@
             string RequestString = Encoding.Default.GetString(Req);
 
             if (RequestString.Equals("[NEWORDER]"))
+            {
                 MainPageViewModel.VM.LoadLists();
+            }
         }
 
         #endregion

@@ -23,14 +23,14 @@ namespace CookingTerminal
         /// <typeparam name="ModelViewModelType">The ViewModel of the model to create a Observable collection of</typeparam>
         /// <param name="dbList">The actual IEnumerable returned from the database</param>
         /// <returns></returns>
-        public static async Task<ObservableCollection<ModelViewModelType>> FillListFromDatabase<ModelType, ModelViewModelType>(IEnumerable dbList)
+        public static async Task<ThreadSafeObservableCollection<ModelViewModelType>> FillListFromDatabase<ModelType, ModelViewModelType>(IEnumerable dbList)
                     where ModelViewModelType : new()
         {
 
             IEnumerable<ModelType> databaseList = (dbList as IEnumerable<ModelType>);
 
             // the new list to return
-            ObservableCollection<ModelViewModelType> result = new ObservableCollection<ModelViewModelType>();
+            ThreadSafeObservableCollection<ModelViewModelType> result = new ThreadSafeObservableCollection<ModelViewModelType>();
 
             var properties = typeof(ModelType).GetProperties();
 

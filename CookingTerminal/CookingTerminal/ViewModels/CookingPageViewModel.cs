@@ -1,17 +1,16 @@
-﻿using BackendHandler;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Threading;
-
-namespace CookingTerminal
+﻿namespace CookingTerminal
 {
+    /// <summary>
+    /// Required namespaces
+    /// </summary>
+    #region Namespaces
+    using BackendHandler;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Input;
+    #endregion
+
     public class CookingPageViewModel : BaseViewModel
     {
 
@@ -37,12 +36,12 @@ namespace CookingTerminal
         /// <summary>
         /// The lsit of foods to cook
         /// </summary>
-        public ObservableCollection<PizzaViewModel> FoodsToCook { get; set; }
+        public ThreadSafeObservableCollection<PizzaViewModel> FoodsToCook { get; set; }
 
         /// <summary>
         /// The list of cooked foods
         /// </summary>
-        public ObservableCollection<PizzaViewModel> CookedFoods { get; set; }
+        public ThreadSafeObservableCollection<PizzaViewModel> CookedFoods { get; set; }
 
         /// <summary>
         /// The visibility property of the serve button
@@ -82,8 +81,8 @@ namespace CookingTerminal
             _orderToCook = OrderToCook;
 
             // Creating new lists
-            FoodsToCook = new ObservableCollection<PizzaViewModel>();
-            CookedFoods = new ObservableCollection<PizzaViewModel>();
+            FoodsToCook = new ThreadSafeObservableCollection<PizzaViewModel>();
+            CookedFoods = new ThreadSafeObservableCollection<PizzaViewModel>();
 
             // Gets all pizzas from the chosen order
             Task.Run(async () => await GetFoodsFromOrder()).Wait();
@@ -207,6 +206,11 @@ namespace CookingTerminal
                 // Updates the status in the database
                 await rep.UpdateOrderStatusWhenOrderIsCooked(OrderToServe);
 
+                // Checks if server is connected and if it is notifies the cashier terminal
+                if (ProgramState.Server.ConnectionState == ConnectionStates.Connected)
+                    ProgramState.Server.SendMessage("[ORDERBAKED]");
+
+                // Change back the current page
                 MainWindowViewModel.VM.CurrentPage = Navigator.Main;
             }
         }

@@ -29,8 +29,8 @@ namespace CookingTerminal
 
             // Sets the startup location to center of the parent window
             this.WindowStartupLocation = WindowStartupLocation.Manual;
-            this.Top = ((Window.GetWindow(MainWindow.Instance).ActualHeight / 2) - this.ActualHeight);
-            this.Left = ((Window.GetWindow(MainWindow.Instance).ActualWidth / 2) - this.ActualWidth);
+            this.Top = Window.GetWindow(MainWindow.Instance).ActualHeight / 2;
+            this.Left = Window.GetWindow(MainWindow.Instance).ActualWidth / 2;
 
             this.WindowStyle = WindowStyle.None;
         }

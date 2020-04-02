@@ -20,11 +20,6 @@ namespace CookingTerminal
         public static MainPageViewModel VM { get; set; }
 
         /// <summary>
-        /// Instance of a dispatcher thread to be invoked from other threads
-        /// </summary>
-        public Dispatcher ThisDispatcher { get; set; }
-
-        /// <summary>
         /// The property used to save the items from database
         /// </summary>
         public IEnumerable DatabaseList { get; set; }
@@ -32,17 +27,17 @@ namespace CookingTerminal
         /// <summary>
         /// All orders with status 0 (ready to be cooked)
         /// </summary>
-        public ObservableCollection<OrderViewModel> OrdersReadyToCook { get; set; }
+        public ThreadSafeObservableCollection<OrderViewModel> OrdersReadyToCook { get; set; }
 
         /// <summary>
         /// The orders that waited the longest
         /// </summary>
-        public ObservableCollection<OrderViewModel> PrioritizedOrders { get; set; }
+        public ThreadSafeObservableCollection<OrderViewModel> PrioritizedOrders { get; set; }
 
         /// <summary>
         /// Orders that not fit in main window but still need to be cooked
         /// </summary>
-        public ObservableCollection<OrderViewModel> OrdersWaiting { get; set; }
+        public ThreadSafeObservableCollection<OrderViewModel> OrdersWaiting { get; set; }
 
         #endregion
 
@@ -61,8 +56,11 @@ namespace CookingTerminal
         {
             // Save an instance of this ViewModel
             VM = this;
-            // Save an instance of this dispatcher so it can be invoked from other threads
-            ThisDispatcher = Dispatcher.CurrentDispatcher;
+
+            // Creating the lists
+            OrdersReadyToCook = new ThreadSafeObservableCollection<OrderViewModel>();
+            PrioritizedOrders = new ThreadSafeObservableCollection<OrderViewModel>();
+            OrdersWaiting = new ThreadSafeObservableCollection<OrderViewModel>();
 
             LoadLists();
 
@@ -111,24 +109,18 @@ namespace CookingTerminal
         /// <summary>
         /// Load all order lists
         /// </summary>
-        public void LoadLists()
+        public async void LoadLists()
         {
-            // Creating the lists
-            OrdersReadyToCook = new ObservableCollection<OrderViewModel>();
-            PrioritizedOrders = new ObservableCollection<OrderViewModel>();
-            OrdersWaiting = new ObservableCollection<OrderViewModel>();
+            PrioritizedOrders.Clear();
+            OrdersWaiting.Clear();
 
-            Task.Run(async () =>
-            {
-                // Getting all items from the database
-                DatabaseList = await rep.GetOrderByStatus(0);
+            // Getting all items from the database
+            DatabaseList = await rep.GetOrderByStatus(0);
 
-                // Setting it to the UI list
-                OrdersReadyToCook = await ViewModelhelpers.FillListFromDatabase<BackendHandler.Order, OrderViewModel>(DatabaseList);
+            // Setting it to the UI list
+            OrdersReadyToCook = await ViewModelhelpers.FillListFromDatabase<BackendHandler.Order, OrderViewModel>(DatabaseList);
 
-            }).Wait();
-
-            ThisDispatcher.Invoke(FillWaitingLists);
+            FillWaitingLists();
         }
 
         #endregion
