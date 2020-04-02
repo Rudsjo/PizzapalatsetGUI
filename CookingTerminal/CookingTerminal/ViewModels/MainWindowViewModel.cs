@@ -55,7 +55,7 @@ namespace CookingTerminal
             // Sets the value of the static property
             VM = this;
 
-            //Init();
+            Init();
         }
 
         #endregion
