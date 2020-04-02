@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfInfoTerminal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="Info Screen" Height="1080" Width="1920" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
  
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,13 +35,15 @@
         <StackPanel Grid.Row="3" HorizontalAlignment="Center" Background="{x:Null}">
             
             <ListBox HorizontalContentAlignment="Center" SelectionMode="Single" IsHitTestVisible="False"
-                     ItemsSource="{Binding OrdersOngoing}" 
+                     Height="650"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ItemsSource="{Binding OrdersOngoing, UpdateSourceTrigger=PropertyChanged}" 
                      Background="{x:Null}"
                      BorderBrush="{x:Null}">
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="3"/>
+                        <UniformGrid Columns="3" Rows="4"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 
@@ -51,7 +53,7 @@
                             <Button Margin="30" Height="100" Width="100" Foreground="{StaticResource WineRedBrush}" IsEnabled="False"
                                     Style="{StaticResource InfoButton}"
                                     Content="{Binding OrderID}"
-                                    FontFamily="{StaticResource MontserratRegular}" 
+                                    FontFamily="{StaticResource MontserratRegular}"
                                     FontSize="{StaticResource FontSizeLarge}">
                             </Button>
                         </StackPanel>
@@ -74,13 +76,15 @@
         <StackPanel Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Background="{x:Null}">
 
             <ListBox HorizontalContentAlignment="Center" SelectionMode="Single" IsHitTestVisible="False"
-                     ItemsSource="{Binding OrdersReadyToServe}" 
+                     Height="650"
+                     ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                     ItemsSource="{Binding OrdersReadyToServe, UpdateSourceTrigger=PropertyChanged}" 
                      Background="{x:Null}"
                      BorderBrush="{x:Null}">
 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="3"/>
+                        <UniformGrid Columns="3" Rows="4"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
 

@@ -13,25 +13,23 @@ namespace WpfInfoTerminal.ViewModels
     public class OrderViewModel : ObservableObject
     {
 
+		public static OrderViewModel Instance { get; set; }
 
-		private IDatabase rep { get; set; } = Helpers.GetSelectedBackend();
+		public IDatabase rep { get; set; } = Helpers.GetSelectedBackend();
 
-
-		private ObservableCollection<OrderModel> _ordersReadyToServe;
-		public ObservableCollection<OrderModel> OrdersReadyToServe
+		private ThreadSafeObservableCollection<OrderModel> _ordersReadyToServe;
+		public ThreadSafeObservableCollection<OrderModel> OrdersReadyToServe
 		{
 			get { return _ordersReadyToServe; }
 			set { OnPropertyChanged(ref _ordersReadyToServe, value); }
 		}
 
-
-		private ObservableCollection<OrderModel> _ordersOngoing;
-		public ObservableCollection<OrderModel> OrdersOngoing
+		private ThreadSafeObservableCollection<OrderModel> _ordersOngoing;
+		public ThreadSafeObservableCollection<OrderModel> OrdersOngoing
 		{
 			get { return _ordersOngoing; }
 			set { OnPropertyChanged(ref _ordersOngoing, value); }
 		}
-
 
 		private IEnumerable _dataBaseList;
 		public IEnumerable DataBaseList
@@ -40,19 +38,30 @@ namespace WpfInfoTerminal.ViewModels
 			set { OnPropertyChanged(ref _dataBaseList, value); }
 		}
 
-
 		public OrderViewModel()
 		{
+			Instance = this;
+			OrdersOngoing = new ThreadSafeObservableCollection<OrderModel>();
+			OrdersReadyToServe = new ThreadSafeObservableCollection<OrderModel>();
+
 			GetOngoingOrders();
 			GetReadyOrders();
 		}
 
 
-		public async Task<ObservableCollection<OrderModel>> GetOngoingOrders()
+		public async void GetOngoingOrders()
 		{
-			DataBaseList = await rep.GetOrderByStatus(1);
-			OrdersOngoing = new ObservableCollection<OrderModel>();
+			// Gets order status 0 and checks if an order has a pizza in it otherwise change
+			// Order Status to two.
+			DataBaseList = await rep.GetOrderByStatus(0);
+			foreach (Order order in DataBaseList)
+			{
+				if (order.PizzaList.Count < 1)
+					await rep.UpdateOrderStatusWhenOrderIsCooked(order);
+			}
 
+			DataBaseList = await rep.GetOrderByStatus(0);
+			OrdersOngoing.Clear();
 			foreach (Order item in DataBaseList)
 			{
 				OrderModel order = new OrderModel();
@@ -61,13 +70,12 @@ namespace WpfInfoTerminal.ViewModels
 
 				OrdersOngoing.Add(order);
 			}
-			return OrdersOngoing;
+
 		}
-		public async Task<ObservableCollection<OrderModel>> GetReadyOrders()
+		public async void GetReadyOrders()
 		{
 			DataBaseList = await rep.GetOrderByStatus(2);
-			OrdersReadyToServe = new ObservableCollection<OrderModel>();
-
+			OrdersReadyToServe.Clear();
 			foreach (Order item in DataBaseList)
 			{
 				OrderModel order = new OrderModel();
@@ -76,7 +84,6 @@ namespace WpfInfoTerminal.ViewModels
 
 				OrdersReadyToServe.Add(order);
 			}
-			return OrdersReadyToServe;
 		}
 
 	}
