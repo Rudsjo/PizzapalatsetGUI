@@ -65,7 +65,7 @@
         /// <summary>
         /// List of all the available products
         /// </summary>
-        public ObservableCollection<OrderItemViewModel> PagedProducts { get; set; }
+        public ThreadSafeObservableCollection<OrderItemViewModel> PagedProducts { get; set; }
 
         /// <summary>
         /// Contains static properties for the currnet order.
@@ -138,7 +138,7 @@
             if (DatabaseHelpers.AllProducts != null)
             {
                 // Load products from the Database class
-                PagedProducts = new ObservableCollection<OrderItemViewModel>(
+                PagedProducts = new ThreadSafeObservableCollection<OrderItemViewModel>(
                                                                               DatabaseHelpers.AllProducts.Where(
                                                                               p => p.Type == CurrentMenu));
             }
@@ -215,7 +215,7 @@
             {
                 CurrentMenu   = res;
                 // Get all of the products from the database that is the correct type
-                PagedProducts = new ObservableCollection<OrderItemViewModel>(
+                PagedProducts = new ThreadSafeObservableCollection<OrderItemViewModel>(
                                                                              DatabaseHelpers.AllProducts.Where(
                                                                              p => p.Type == res));
             }

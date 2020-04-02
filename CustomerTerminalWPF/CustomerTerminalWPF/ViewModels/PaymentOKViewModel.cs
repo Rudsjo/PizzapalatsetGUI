@@ -16,7 +16,6 @@
                 DatabaseHelpers.CreateOrder(OrderPageViewModel.VM.OrderItems);
                 ProgramState.ServerConnection.SendMessage("[NEWORDER]");
             }
-            OrderPageViewModel.VM.SubPage = OrderSubPages.None;
         }
     }
 }
