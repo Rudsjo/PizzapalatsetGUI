@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashierV3.GUI", "CashierV3.GUI\CashierV3.GUI.csproj", "{BEBEFF57-1B83-4602-B943-DC03A21A6FD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendHandler", "..\Newton\Objektorienterad programmering 2\Backup Projekt\WPF_Kassörskan_V2\BackendHandler\BackendHandler.csproj", "{637231F4-B388-465F-BEE0-E6D7B1612F11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEBEFF57-1B83-4602-B943-DC03A21A6FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBEFF57-1B83-4602-B943-DC03A21A6FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBEFF57-1B83-4602-B943-DC03A21A6FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBEFF57-1B83-4602-B943-DC03A21A6FD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637231F4-B388-465F-BEE0-E6D7B1612F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637231F4-B388-465F-BEE0-E6D7B1612F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637231F4-B388-465F-BEE0-E6D7B1612F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637231F4-B388-465F-BEE0-E6D7B1612F11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84474C47-2A54-4209-B6D8-25079093C1AF}
+	EndGlobalSection
+EndGlobal
