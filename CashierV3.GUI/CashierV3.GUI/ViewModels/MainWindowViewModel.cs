@@ -30,7 +30,7 @@ namespace CashierV3.GUI
         public MainWindowViewModel()
         {
             Instance = this;
-            //Init();
+            Init();
         }
 
         #endregion

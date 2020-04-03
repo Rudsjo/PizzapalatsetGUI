@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Newton\Objektorienterad programmering 2\Backup Projekt\WPF_Kassörskan_V2\BackendHandler\BackendHandler.csproj" />
+    <ProjectReference Include="..\BackendHandler\BackendHandler.csproj" />
   </ItemGroup>
 
   <ItemGroup>
