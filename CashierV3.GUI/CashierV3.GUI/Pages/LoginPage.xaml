@@ -6,6 +6,7 @@
       xmlns:local="clr-namespace:CashierV3.GUI"
       mc:Ignorable="d" 
       d:DesignHeight="900" d:DesignWidth="1280"
+      x:Name="LoginStartPage"
       Title="LoginPage">
 
     <StackPanel VerticalAlignment="Center" Margin="0 -100 0 0">
@@ -30,14 +31,14 @@
                         Grid.Column="1">
                 
                 <TextBox Width="150" Margin="5" Padding="3" Text="{Binding UserID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Width="150" Margin="5" Padding="3" Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-
+                <PasswordBox x:Name="PasswordText" Tag="Password" Width="150" Margin="5" Padding="3" />
 
 
                 <!-- Login button -->
                 <Button Content="Logga in" 
                         Style="{StaticResource LoginButton}"
-                        Command="{Binding Login}"/>
+                        Command="{Binding Login}"
+                        CommandParameter="{Binding ElementName=LoginStartPage}"/>
 
             </StackPanel>
 

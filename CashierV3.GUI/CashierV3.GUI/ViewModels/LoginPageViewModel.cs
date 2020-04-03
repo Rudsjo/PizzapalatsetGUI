@@ -24,33 +24,36 @@ namespace CashierV3.GUI
             }
         }
 
-        /// <summary>
-        /// Property for getting the password from user
-        /// </summary>
-        private string _password;
-        public string Password
-        {
-            get { return _password; }
-            set 
-            {
-                _password = value;
-                OnPropertyChanged("Password");
-            }
-        }
+        #region Properties not needed
 
-        /// <summary>
-        /// This property is not used in this program and can be removed
-        /// </summary>
-        private string _role;
-        public string Role
-        {
-            get { return _role; }
-            set 
-            {
-                _role = value;
-                OnPropertyChanged("Role"); 
-            }
-        }
+        ///// <summary>
+        ///// Property for getting the password from user
+        ///// </summary>
+        //private string _password;
+        //public string Password
+        //{
+        //    get { return _password; }
+        //    set 
+        //    {
+        //        _password = value;
+        //        OnPropertyChanged("Password");
+        //    }
+        //}
+
+        ///// <summary>
+        ///// This property is not used in this program and can be removed
+        ///// </summary>
+        //private string _role;
+        //public string Role
+        //{
+        //    get { return _role; }
+        //    set 
+        //    {
+        //        _role = value;
+        //        OnPropertyChanged("Role"); 
+        //    }
+        //}
+        #endregion
 
         #endregion
 
@@ -69,10 +72,10 @@ namespace CashierV3.GUI
         /// Then the cashierPage can open.
         /// </summary>
         /// <param name="u"></param>
-        private async void LoginToCashierPage(object u)
+        private async void LoginToCashierPage(object pass)
         {
             var id = int.TryParse(UserID, out int validInput);
-            var result = await rep.CheckUserIdAndPassword(validInput, Password);
+            var result = await rep.CheckUserIdAndPassword(validInput, (pass as IHavePassword).SecurePassword.Unsecure());
 
             if (result.Item1 == true && result.Item2.ToLower() != "bagare")
             {
