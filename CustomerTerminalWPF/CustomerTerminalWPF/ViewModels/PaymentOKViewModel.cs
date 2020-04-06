@@ -21,21 +21,21 @@ namespace CustomerTerminalWPF.ViewModels
 
         public async void CompleteOrder()
         {           
+            /* Save the order to the database and wait for the order id before
+             * notifying the server, this will prevent sync issues with the other
+             * terminals.
+            /*==================================================================> */
+            var Order = await DatabaseHelpers.CreateOrder(OrderPageViewModel.VM.OrderItems);
+            OrderID = Order.OrderID.ToString();
+            /*==================================================================> 
+             */
+
             // Send notification to the server if the terminal is connected
             if (ProgramState.ServerConnection.ConnectionState == ConnectionStates.Connected)
             {
                 // Notify the server that a new order has been created
                 ProgramState.ServerConnection.SendMessage("[NEWORDER]");
             }
-
-            /* This function will wait for a response from the database
-             * before it notifies the server so that no sync isssues
-             * will occur 
-            /*==================================================================> */
-            var Order = await DatabaseHelpers.CreateOrder(OrderPageViewModel.VM.OrderItems);
-            OrderID = Order.OrderID.ToString();
-            /*==================================================================> 
-             */
 
             // Change screen after 4 seconds
             Timer ChangeScreen = new Timer((ee) => { MainWindowViewModel.VM.CurrentScreen = MainPages.WellcomeScreen; }, null, 4000, 0);
