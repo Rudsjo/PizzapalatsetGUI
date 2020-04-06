@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfInfoTerminal.Models;
 
 namespace WpfInfoTerminal.ViewModels
@@ -40,6 +41,8 @@ namespace WpfInfoTerminal.ViewModels
 
 		public OrderViewModel()
 		{
+			Init();
+
 			Instance = this;
 			OrdersOngoing = new ThreadSafeObservableCollection<OrderModel>();
 			OrdersReadyToServe = new ThreadSafeObservableCollection<OrderModel>();
@@ -86,5 +89,17 @@ namespace WpfInfoTerminal.ViewModels
 			}
 		}
 
+		public async void Init()
+		{
+			ProgramState.IsRunning = true;
+
+			ConfigFileHelpers.ReadServerConfigFile();
+
+			if (await ProgramState.ServerConnection.ConnectAsync())
+				MessageBox.Show("Terminal is connected to the server");
+
+			else
+				MessageBox.Show("Could not connect to the server, RUNNING IN OFFLINE MODE");
+		}
 	}
 }

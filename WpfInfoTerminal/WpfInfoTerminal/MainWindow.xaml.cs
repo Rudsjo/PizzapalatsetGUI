@@ -26,20 +26,6 @@ namespace WpfInfoTerminal
         public MainWindow()
         {
             DataContext = new OrderViewModel();
-            Init();
-        }
-
-        public async void Init()
-        {
-            ProgramState.IsRunning = true;
-
-            ConfigFileHelpers.ReadServerConfigFile();
-
-            if (await ProgramState.ServerConnection.ConnectAsync())
-                MessageBox.Show("Terminal is connected to the server");
-
-            else
-                MessageBox.Show("Could not connect to the server, RUNNING IN OFFLINE MODE");
         }
 
     }
