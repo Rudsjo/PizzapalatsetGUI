@@ -52,7 +52,7 @@
         <ItemsControl ItemsSource="{Binding PrioritizedOrders}" Grid.Column="0" Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="1" />
+                    <UniformGrid Rows="1" Columns="6" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
