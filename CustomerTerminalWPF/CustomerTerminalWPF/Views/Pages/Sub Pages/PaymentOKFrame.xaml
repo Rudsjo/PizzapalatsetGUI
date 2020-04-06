@@ -45,8 +45,8 @@
         <TextBlock Grid.Row="1" Text="Din betalning är genomförd" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="40" Width="530" 
                    TextWrapping="Wrap" FontFamily="{StaticResource Manti}" FontWeight="Bold" Margin="0,30,0,0"
                    Foreground="{StaticResource TextGraySolid}" TextAlignment="Center"/>
-        <TextBlock Grid.Row="2" Text="Glöm inte kvittot med tillhörande ordernummer" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="40" Width="530" 
+        <TextBlock Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="40" Width="530" 
                    TextWrapping="Wrap" FontFamily="{StaticResource Manti}" FontWeight="Bold" 
-                   Foreground="{StaticResource TextGraySolid}" TextAlignment="Center"/>
+                   Foreground="{StaticResource TextGraySolid}" TextAlignment="Center"> <Run Text="Glöm inte kvittot, ditt ordernummer är "/> <Run Text="{Binding OrderID}"/></TextBlock>
     </Grid>
 </vs:BasePage>

@@ -43,7 +43,7 @@
         /// Saves an order to the database
         /// </summary>
         /// <param name="Items">Collection of all the order items</param>
-        public static async Task<int> CreateOrder(ObservableCollection<OrderItemViewModel> Items)
+        public static async Task<Order> CreateOrder(ObservableCollection<OrderItemViewModel> Items)
         {
             // Crate an empty order model
             Order _order = new Order()
@@ -81,9 +81,12 @@
                 _order.Price += e.Price;
             }
 
-            // Wait until the order has been saved to the datase and
-            // return the received order ID
-            return (await Backend.AddOrder(_order));
+            // Wait until the order has been saved to the database
+            int OrderID = await Backend.AddOrder(_order);
+            // Set the received order id to the order object
+            _order.OrderID = OrderID;
+            // Return the order with its id
+            return _order;
         }
 
         /// <summary>
