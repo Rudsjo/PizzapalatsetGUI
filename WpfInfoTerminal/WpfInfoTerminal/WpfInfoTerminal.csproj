@@ -25,4 +25,10 @@
     <ProjectReference Include="..\BackendHandler\BackendHandler.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ConfigFiles\ServerConfig.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

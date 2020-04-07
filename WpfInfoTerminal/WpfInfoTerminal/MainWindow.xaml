@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfInfoTerminal"
         mc:Ignorable="d"
-        Title="Info Screen" Height="1080" Width="1920" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" WindowStyle="None">
+        Title="Info Screen" MinHeight="950" MinWidth="1280" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" WindowState="Maximized">
  
     <Grid>
         <Grid.ColumnDefinitions>
