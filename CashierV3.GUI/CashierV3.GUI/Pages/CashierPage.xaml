@@ -68,7 +68,7 @@
 
             <!--#region ListBox-->
             
-            <ListBox Name="itemsCtrl" HorizontalContentAlignment="Center" SelectionMode="Single" Height="370"
+            <ListBox Name="itemsCtrl" HorizontalContentAlignment="Center" SelectionMode="Single" Height="440"
                      ScrollViewer.CanContentScroll="True"
                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
                      ItemsSource="{Binding OrderList}" 
@@ -114,7 +114,7 @@
                 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="3" Rows="3"/>
+                        <UniformGrid Columns="3"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 
