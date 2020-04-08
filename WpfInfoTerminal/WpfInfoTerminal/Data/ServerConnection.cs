@@ -158,7 +158,7 @@
             // Convert the bytes
             string RequestString = Encoding.Default.GetString(Req);
 
-            if (RequestString.Equals("[NEWORDER]"))
+            if (RequestString.Equals("[NEWORDER]") || RequestString.Equals("[ORDERBAKED]"))
             {
                 OrderViewModel.Instance.GetOngoingOrders();
             }
