@@ -126,7 +126,7 @@ namespace CashierV3.GUI
             await rep.UpdateOrderStatusWhenOrderIsServed(employeeLoggedIn, orderToUpdate);
             GetAllOrders();
 
-            if (ProgramState.Running) { ProgramState.Server.SendMessage("[ORDERDONE]"); }               
+            ProgramState.Server.SendMessage("[ORDERDONE]");             
         }
 
         /// <summary>
