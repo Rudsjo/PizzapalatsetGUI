@@ -1,0 +1,17 @@
+The terminal application is the local server that you start first. In that application there´s a helpsection if you type :h.
+
+After the server is up and running, go ahead and start the rest of the applications. 
+The server will give you messages for when an application is connected and for when something has happened in any of the applications.
+
+Keep the customers terminal to ip 127.0.0.1.
+
+If you dont want to use the server that is fine as the applications can run without it, but doesn`t update the view instantly.
+
+Every application is connected to the database so any changes will go to the database even if the server isn`t running.
+
+Those applications that requires username and password uses these credentials:
+
+username: 1
+password: admin
+
+admin can log in to all applications
