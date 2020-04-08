@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29905.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfInfoTerminal", "WpfInfoTerminal\WpfInfoTerminal.csproj", "{24F756E3-3478-406B-9AEA-3DC03E143897}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackendHandler", "..\BackendHandler\BackendHandler.csproj", "{144E7167-7F90-4F4D-A0D2-38A6EB2A8F23}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{24F756E3-3478-406B-9AEA-3DC03E143897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F756E3-3478-406B-9AEA-3DC03E143897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F756E3-3478-406B-9AEA-3DC03E143897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F756E3-3478-406B-9AEA-3DC03E143897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{144E7167-7F90-4F4D-A0D2-38A6EB2A8F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{144E7167-7F90-4F4D-A0D2-38A6EB2A8F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{144E7167-7F90-4F4D-A0D2-38A6EB2A8F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{144E7167-7F90-4F4D-A0D2-38A6EB2A8F23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AAD3B2AD-1028-45A7-ABD6-3AC8767BAB6D}
+	EndGlobalSection
+EndGlobal

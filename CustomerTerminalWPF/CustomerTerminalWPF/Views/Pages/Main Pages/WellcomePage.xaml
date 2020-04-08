@@ -1,0 +1,69 @@
+﻿<vs:BasePage x:TypeArguments="vm:WellcomePageViewModel" 
+                x:Class="CustomerTerminalWPF.Views.Pages.WellcomePage"
+                
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CustomerTerminalWPF"
+      xmlns:vm="clr-namespace:CustomerTerminalWPF.ViewModels"
+      xmlns:vs="clr-namespace:CustomerTerminalWPF.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="1000" d:DesignWidth="1800">
+    <Border BorderThickness="5" BorderBrush="{StaticResource DarkGraySolid}" Background="White">
+        <Grid>
+            <Grid.Background>
+                <ImageBrush ImageSource="/Views/Images/BG.png"/>
+            </Grid.Background>
+            
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+          
+            <Image Source="pack:\\application:,,,/Views/Images/LogoBig.png" Width="400" Height="400" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Välkommen in" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource Manti}" 
+                           Foreground="{StaticResource TextGraySolid}" FontSize="100" Margin="0,0,0,0"/>
+                <TextBlock Text="Klicka på skärmen" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource Manti}" 
+                           Foreground="{StaticResource TextGraySolid}" FontSize="60" Margin="0,10,0,0"/>
+                <TextBlock Text="för att påbörja din beställning" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           FontFamily="{StaticResource Manti}" 
+                           Foreground="{StaticResource TextGraySolid}" FontSize="60" Margin="0,10,0,0"/>
+            </StackPanel>
+
+            <Ellipse Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="200" Height="200" StrokeThickness="2" Stroke="{StaticResource TextGraySolid}" Margin="0,0,200,200"/>
+            <Ellipse Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="180" Height="180" StrokeThickness="2" Stroke="{StaticResource TextGraySolid}" Margin="0,0,210,210" RenderTransformOrigin=".5,.5">
+
+                <Ellipse.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" x:Name="Scale"/>
+                </Ellipse.RenderTransform>
+
+                <Ellipse.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)" Storyboard.TargetName="Scale" Duration="00:00:00.5" AutoReverse="True" RepeatBehavior="Forever" To=".7"/>
+                                <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)" Storyboard.TargetName="Scale" Duration="00:00:00.5" AutoReverse="True" RepeatBehavior="Forever" To=".7"/>
+                            </Storyboard>
+                            
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Ellipse.Triggers>
+                
+            </Ellipse>
+            <Image Grid.Row="1" Source="/Views/Images/Hand.png" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="400"/>
+
+            <Button Grid.RowSpan="2" 
+                    VerticalAlignment="Top" HorizontalAlignment="Right" 
+                    BorderThickness="0" Background="Transparent"
+                    Command="{Binding BeginOrderCommand}" 
+                    Width="1800" Height="1000" Opacity="0"/>
+
+        </Grid>
+    </Border>
+</vs:BasePage>

@@ -1,0 +1,51 @@
+﻿<vs:BasePage x:TypeArguments="vm:PaymentWaitingViewModel" 
+             x:Class="CustomerTerminalWPF.Views.Pages.Sub_Pages.PaymentWaitingFrame"
+      
+      xmlns:vm="clr-namespace:CustomerTerminalWPF.ViewModels"
+      xmlns:vs="clr-namespace:CustomerTerminalWPF.Views"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CustomerTerminalWPF"
+      mc:Ignorable="d" 
+      d:DesignHeight="750" d:DesignWidth="600"
+      Background="White"
+      Title="PaymentWaitingFrame">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3.5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+
+        <Image VerticalAlignment="Top" HorizontalAlignment="Center" Source="/Views/Images/payment.png" Width="350" Margin="0,30,0,0" Grid.Row="0"/>
+        <TextBlock Text="Vänligen följ anvisningarna i betalningsterminalen" VerticalAlignment="Bottom" HorizontalAlignment="Center" FontSize="41" Width="530" 
+                           Margin="0,0,0,120" TextWrapping="Wrap" FontFamily="{StaticResource Manti}" FontWeight="Bold" 
+                           Foreground="{StaticResource TextGraySolid}" TextAlignment="Center" Grid.Row="0"/>
+
+        <Image VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="64" Height="64" Grid.Row="0" Source="/Views/Images/spinner.png" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,25">
+
+            <Image.RenderTransform>
+                <RotateTransform x:Name="ImageRotate" />
+            </Image.RenderTransform>
+
+            <Image.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="(RotateTransform.Angle)" Storyboard.TargetName="ImageRotate" To="360" Duration="00:00:05" RepeatBehavior="Forever"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Image.Triggers>
+
+        </Image>
+
+
+        <Button Grid.Row="1" Style="{StaticResource CancelButtonClean}" Command="{Binding CancelPaymentCommand}"/>
+
+    </Grid>
+</vs:BasePage>
