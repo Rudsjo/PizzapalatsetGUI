@@ -114,7 +114,7 @@
                 
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Columns="3"/>
+                        <UniformGrid Columns="3" Rows="3"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 
